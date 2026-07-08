@@ -516,7 +516,7 @@ function App() {
               
               <h2 className="text-xl font-bold mb-md" style={{ padding: '24px 24px 0' }}>Tambah Produk Baru</h2>
               
-              <form onSubmit={handleSaveProduct} className="flex flex-col gap-md" style={{ flex: 1, overflowY: 'auto', padding: '0 24px', paddingBottom: '8px' }}>
+              <form id="add-product-form" onSubmit={handleSaveProduct} className="flex flex-col gap-md" style={{ flex: 1, overflowY: 'auto', padding: '0 24px', paddingBottom: '8px' }}>
                 {/* Image Upload Area */}
                 <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-surface-hover transition-fast" style={{ minHeight: '90px', maxHeight: '90px', overflow: 'hidden' }} onClick={() => document.getElementById('imageUpload').click()}>
                   {newProduct.imagePreview ? (
@@ -554,16 +554,13 @@ function App() {
                   </div>
                 </div>
 
-                <button type="submit" disabled={isSaving} className="btn btn-primary w-full mt-sm py-md text-lg flex justify-center items-center gap-2">
-                  {isSaving ? 'Menyimpan...' : 'Simpan Produk'}
-                </button>
               </form>
 
               {/* Sticky footer tombol simpan */}
               <div style={{ padding: '12px 24px 20px', borderTop: '1px solid #f1f5f9', background: '#fff', flexShrink: 0 }}>
                 <button
-                  type="button"
-                  onClick={handleSaveProduct}
+                  type="submit"
+                  form="add-product-form"
                   disabled={isSaving}
                   className="btn btn-primary w-full py-md text-lg flex justify-center items-center gap-2"
                 >
