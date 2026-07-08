@@ -255,11 +255,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar {
-  width: 280px;
+  width: 90px;
   background-color: var(--surface);
-  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-lg) 0;
+  border-right: none;
   z-index: 10;
 }
 
@@ -371,6 +373,7 @@ h1, h2, h3, h4, h5, h6 {
 .border-dashed { border-style: dashed; }
 .object-contain { object-fit: contain; }
 .object-cover { object-fit: cover; }
+.shadow-glow { box-shadow: 0 8px 16px -4px rgba(13, 148, 136, 0.4); }
 
 .hidden { display: none; }
 .flex { display: flex; }

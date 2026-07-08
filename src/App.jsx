@@ -178,49 +178,58 @@ function App() {
 
   return (
     <div className="app-container md:pb-0" style={{ paddingBottom: '70px' }}>
-      {/* SIDEBAR */}
-      <aside className="sidebar hidden md:flex">
-        <div className="p-lg border-b flex items-center gap-sm">
-          <div className="w-12 h-12 flex-shrink-0 animate-fade-in flex items-center justify-center">
+      {/* SIDEBAR (Desktop Minimalist Lux) */}
+      <aside className="sidebar hidden md:flex shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+        <div className="mb-xl flex flex-col items-center justify-center">
+          <div className="w-14 h-14 flex-shrink-0 animate-fade-in flex items-center justify-center mb-2">
             <img src="/payuo_logo.png" alt="PayuO Logo" className="w-full h-full object-contain drop-shadow-md rounded-full border-2 border-surface-hover" />
           </div>
-          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#D97706]">PayuO</h1>
         </div>
         
-        <nav className="p-md flex-col gap-sm flex-1">
+        <nav className="flex flex-col gap-md w-full px-sm flex-1">
           <button 
-            className={`flex items-center gap-md w-full p-sm rounded-md transition-fast ${activeTab === 'kasir' ? 'bg-primary-light text-primary font-semibold' : 'text-secondary hover:bg-surface-hover'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'text-secondary-light hover:bg-surface-hover hover:text-primary'}`}
             onClick={() => setActiveTab('kasir')}
+            title="Kasir Utama"
           >
-            <ShoppingBag size={20} /> Kasir
+            <ShoppingBag size={24} />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Kasir</span>
           </button>
+          
           <button 
-            className={`flex items-center gap-md w-full p-sm rounded-md transition-fast ${activeTab === 'kasbon' ? 'bg-primary-light text-primary font-semibold' : 'text-secondary hover:bg-surface-hover'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'text-secondary-light hover:bg-surface-hover hover:text-primary'}`}
             onClick={() => setActiveTab('kasbon')}
+            title="Buku Kasbon"
           >
-            <Users size={20} /> Catatan Kasbon
+            <Users size={24} />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Kasbon</span>
           </button>
+          
           <button 
-            className={`flex items-center gap-md w-full p-sm rounded-md transition-fast ${activeTab === 'produk' ? 'bg-primary-light text-primary font-semibold' : 'text-secondary hover:bg-surface-hover'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'text-secondary-light hover:bg-surface-hover hover:text-primary'}`}
             onClick={() => setActiveTab('produk')}
+            title="Kelola Produk"
           >
-            <Package size={20} /> Kelola Produk
+            <Package size={24} />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Produk</span>
           </button>
+          
           <button 
-            className={`flex items-center gap-md w-full p-sm rounded-md transition-fast text-secondary hover:bg-surface-hover`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 text-secondary-light hover:bg-surface-hover hover:text-primary`}
+            title="Laporan"
           >
-            <LayoutDashboard size={20} /> Laporan
+            <LayoutDashboard size={24} />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Laporan</span>
           </button>
+
           <button 
-            className={`flex items-center gap-md w-full p-sm rounded-md transition-fast text-secondary hover:bg-surface-hover`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 text-secondary-light hover:bg-surface-hover hover:text-primary mt-auto mb-lg`}
+            title="Pengaturan"
           >
-            <Settings size={20} /> Pengaturan
+            <Settings size={24} />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Setting</span>
           </button>
         </nav>
-        
-        <div className="p-md border-t text-xs text-secondary-light text-center">
-          PayuO POS v1.0.0
-        </div>
       </aside>
 
       {/* MAIN CONTENT */}
