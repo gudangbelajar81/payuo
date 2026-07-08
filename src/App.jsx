@@ -195,7 +195,7 @@ function App() {
               title="Kasir Utama"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
-                <ShoppingCart size={24} strokeWidth={2} />
+                <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">🛒</span>
               </div>
               <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'kasir' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Kasir</span>
             </button>
@@ -208,7 +208,7 @@ function App() {
               title="Buku Kasbon"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
-                <Users size={24} strokeWidth={2} />
+                <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">💸</span>
               </div>
               <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'kasbon' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Kasbon</span>
             </button>
@@ -221,7 +221,7 @@ function App() {
               title="Kelola Produk"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
-                <Package size={24} strokeWidth={2} />
+                <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">📦</span>
               </div>
               <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'produk' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Produk</span>
             </button>
@@ -233,7 +233,7 @@ function App() {
               title="Laporan"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
-                <LayoutDashboard size={24} strokeWidth={2} />
+                <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">📈</span>
               </div>
               <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-slate-400 group-hover:text-primary transition-colors">Laporan</span>
             </button>
@@ -244,8 +244,8 @@ function App() {
               className="flex flex-col items-center justify-center gap-2 w-full"
               title="Pengaturan"
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-90 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
-                <Settings size={24} strokeWidth={2} />
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
+                <span className="text-2xl filter drop-shadow-sm group-hover:animate-spin transition-transform" style={{ display: 'inline-block' }}>⚙️</span>
               </div>
               <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-slate-400 group-hover:text-primary transition-colors">Setting</span>
             </button>
