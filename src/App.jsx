@@ -32,6 +32,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
 
   // Fetch Products on Session Load
   useEffect(() => {
