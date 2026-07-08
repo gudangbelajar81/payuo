@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from './lib/supabaseClient';
 import imageCompression from 'browser-image-compression';
 import Auth from './components/Auth';
+import SubscriptionBadge from './components/SubscriptionBadge';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -318,6 +319,7 @@ function App() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+            <SubscriptionBadge session={session} />
             <button className="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
               <Bell size={20} strokeWidth={1.5} />
             </button>
