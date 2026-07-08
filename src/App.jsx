@@ -181,29 +181,8 @@ function App() {
       {/* SIDEBAR */}
       <aside className="sidebar hidden md:flex">
         <div className="p-lg border-b flex items-center gap-sm">
-          <div className="w-10 h-10 flex-shrink-0 animate-fade-in">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-              <defs>
-                <linearGradient id="tealGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#0D9488"/>
-                  <stop offset="100%" stopColor="#0F766E"/>
-                </linearGradient>
-                <linearGradient id="goldGrad" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#D97706"/>
-                  <stop offset="50%" stopColor="#F59E0B"/>
-                  <stop offset="100%" stopColor="#FCD34D"/>
-                </linearGradient>
-                <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="0" dy="4" stdDeviation="4" floodOpacity="0.25" />
-                </filter>
-              </defs>
-              {/* Outer smooth water drop / wave shape */}
-              <path d="M10,50 C10,27.9 27.9,10 50,10 C72.1,10 90,27.9 90,50 C90,66.5 80,80.6 65.6,86.6 C55.5,90.8 44.5,90.8 34.4,86.6 C20,80.6 10,66.5 10,50 Z" fill="url(#tealGrad)" />
-              {/* Wave cutout / highlight */}
-              <path d="M10,50 C30,30 60,70 90,50 C85,75 60,90 50,90 C25,90 12,70 10,50 Z" fill="#ffffff" fillOpacity="0.15" />
-              {/* Lightning bolt overlay forming an abstract P */}
-              <path d="M48,20 L30,55 L48,55 L38,80 L70,45 L52,45 L62,20 Z" fill="url(#goldGrad)" filter="url(#shadow)" />
-            </svg>
+          <div className="w-12 h-12 flex-shrink-0 animate-fade-in flex items-center justify-center">
+            <img src="/payuo_logo.png" alt="PayuO Logo" className="w-full h-full object-contain drop-shadow-md rounded-full border-2 border-surface-hover" />
           </div>
           <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#D97706]">PayuO</h1>
         </div>
