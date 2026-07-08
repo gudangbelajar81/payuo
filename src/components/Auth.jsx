@@ -114,7 +114,7 @@ export default function Auth({ onLogin }) {
           {isLogin ? 'Selamat Datang' : 'Mulai Bisnis Anda'}
         </h2>
         <p style={{ textAlign: 'center', marginBottom: '2.5rem', color: '#94A3B8', fontSize: '0.95rem' }}>
-          {isLogin ? 'Masuk ke dalam ekosistem PayuO' : 'Daftar sekarang, nikmati akses penuh.'}
+          {isLogin ? 'Masuk ke dalam ekosistem PayuO' : 'Daftar sekarang, gratis 7 hari pertama!'}
         </p>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
