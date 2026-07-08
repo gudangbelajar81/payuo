@@ -16,7 +16,7 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
       ></div>
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
+      <div className="relative w-full max-w-7xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
         
         {/* Header */}
         <div className="bg-slate-900 p-6 text-center text-white relative">
@@ -36,7 +36,7 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
 
         {/* Pricing Cards */}
         <div className="flex-1 overflow-y-auto p-6 bg-slate-50">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
             
             {/* TIER 1: GRATIS */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col">
@@ -164,6 +164,53 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
                 Pesan Alat Sekarang
               </button>
             </div>
+
+            {/* TIER 4: SOFTWARE OFFLINE */}
+            <div className="bg-slate-800 rounded-2xl p-6 shadow-2xl border border-slate-600 flex flex-col relative text-white md:-translate-y-4 lg:translate-y-0">
+              <div className="absolute top-0 right-4 -translate-y-1/2 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                <Printer size={12} /> BELI PUTUS
+              </div>
+              <h3 className="text-lg font-bold text-indigo-400">Paket Offline Pro</h3>
+              <div className="my-4">
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-3xl font-extrabold text-white">Rp 1.5 Jt</span>
+                  <span className="text-slate-400 text-sm">(1x Bayar)</span>
+                </div>
+                <div className="text-sm font-medium text-emerald-400">
+                  Tanpa Biaya Bulanan!
+                </div>
+              </div>
+              <p className="text-sm text-slate-400 mb-6 border-b border-slate-600 pb-4">
+                Instalasi mandiri di HP Android/PC Kasir. Data aman di perangkat sendiri.
+              </p>
+              
+              <ul className="space-y-3 flex-1">
+                <li className="flex items-start gap-2 text-sm text-slate-200">
+                  <ShieldCheck size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
+                  <span>Lisensi Aplikasi Selamanya (Offline)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-slate-200">
+                  <Printer size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
+                  <span><strong>BONUS: Printer Listrik/Portable</strong> (Undian Acak)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-slate-200">
+                  <Check size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
+                  <span>Transaksi & Produk Tanpa Batas</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-slate-200">
+                  <Check size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
+                  <span>Laporan Kasir & Penjualan Lengkap</span>
+                </li>
+              </ul>
+              
+              <button 
+                onClick={() => handleWA('Paket Beli Putus Offline (Rp 1.5 Jt + Bonus Printer Acak)')}
+                className="mt-6 w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
+                Beli Lisensi Offline
+              </button>
+            </div>
+
 
           </div>
         </div>
