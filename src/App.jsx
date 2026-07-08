@@ -3,6 +3,7 @@ import { supabase } from './lib/supabaseClient';
 import imageCompression from 'browser-image-compression';
 import Auth from './components/Auth';
 import SubscriptionBadge from './components/SubscriptionBadge';
+import PricingModal from './components/PricingModal';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -33,6 +34,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
+  const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
 
   // Fetch Products on Session Load
   useEffect(() => {
@@ -320,7 +322,7 @@ function App() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <SubscriptionBadge session={session} />
+            <SubscriptionBadge session={session} onOpenPricing={() => setIsPricingModalOpen(true)} />
             <button className="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
               <Bell size={20} strokeWidth={1.5} />
             </button>
@@ -590,6 +592,11 @@ function App() {
            </button>
         </nav>
       </main>
+      
+      {/* Modals */}
+      {isPricingModalOpen && (
+        <PricingModal onClose={() => setIsPricingModalOpen(false)} />
+      )}
     </div>
   );
 }
