@@ -3,6 +3,7 @@ import { supabase } from './lib/supabaseClient';
 import imageCompression from 'browser-image-compression';
 import { 
   ShoppingBag, 
+  ShoppingCart,
   LayoutDashboard, 
   Users, 
   Settings, 
@@ -186,49 +187,69 @@ function App() {
           </div>
         </div>
         
-        <nav className="flex flex-col gap-md w-full px-sm flex-1">
-          <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow'}`}
-            onClick={() => setActiveTab('kasir')}
-            title="Kasir Utama"
-          >
-            <ShoppingBag size={26} strokeWidth={1.5} className="drop-shadow-sm" />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Kasir</span>
-          </button>
+        <nav className="flex flex-col gap-lg w-full px-sm flex-1 mt-md">
+          <div className="relative group w-full flex justify-center">
+            <button 
+              className="flex flex-col items-center justify-center gap-2 w-full"
+              onClick={() => setActiveTab('kasir')}
+              title="Kasir Utama"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+                <ShoppingCart size={24} strokeWidth={2} />
+              </div>
+              <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'kasir' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Kasir</span>
+            </button>
+          </div>
           
-          <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow'}`}
-            onClick={() => setActiveTab('kasbon')}
-            title="Buku Kasbon"
-          >
-            <Users size={26} strokeWidth={1.5} className="drop-shadow-sm" />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Kasbon</span>
-          </button>
+          <div className="relative group w-full flex justify-center">
+            <button 
+              className="flex flex-col items-center justify-center gap-2 w-full"
+              onClick={() => setActiveTab('kasbon')}
+              title="Buku Kasbon"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+                <Users size={24} strokeWidth={2} />
+              </div>
+              <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'kasbon' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Kasbon</span>
+            </button>
+          </div>
           
-          <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow'}`}
-            onClick={() => setActiveTab('produk')}
-            title="Kelola Produk"
-          >
-            <Package size={26} strokeWidth={1.5} className="drop-shadow-sm" />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Produk</span>
-          </button>
+          <div className="relative group w-full flex justify-center">
+            <button 
+              className="flex flex-col items-center justify-center gap-2 w-full"
+              onClick={() => setActiveTab('produk')}
+              title="Kelola Produk"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+                <Package size={24} strokeWidth={2} />
+              </div>
+              <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'produk' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Produk</span>
+            </button>
+          </div>
           
-          <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow`}
-            title="Laporan"
-          >
-            <LayoutDashboard size={26} strokeWidth={1.5} className="drop-shadow-sm" />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Laporan</span>
-          </button>
+          <div className="relative group w-full flex justify-center">
+            <button 
+              className="flex flex-col items-center justify-center gap-2 w-full"
+              title="Laporan"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
+                <LayoutDashboard size={24} strokeWidth={2} />
+              </div>
+              <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-slate-400 group-hover:text-primary transition-colors">Laporan</span>
+            </button>
+          </div>
 
-          <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow mt-auto mb-lg`}
-            title="Pengaturan"
-          >
-            <Settings size={26} strokeWidth={1.5} className="drop-shadow-sm" />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Setting</span>
-          </button>
+          <div className="relative group w-full flex justify-center mt-auto mb-lg">
+            <button 
+              className="flex flex-col items-center justify-center gap-2 w-full"
+              title="Pengaturan"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-90 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
+                <Settings size={24} strokeWidth={2} />
+              </div>
+              <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-slate-400 group-hover:text-primary transition-colors">Setting</span>
+            </button>
+          </div>
         </nav>
       </aside>
 

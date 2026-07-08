@@ -395,6 +395,16 @@ h1, h2, h3, h4, h5, h6 {
 .hidden { display: none; }
 .flex { display: flex; }
 
+/* 3D Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
 @media (min-width: 768px) {
   .md\:block { display: block !important; }
   .md\:flex { display: flex !important; }
