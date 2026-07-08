@@ -70,7 +70,7 @@ export default function SubscriptionBadge({ session }) {
       {/* Tombol Upgrade (WhatsApp Admin) */}
       {!isActive && (
         <a 
-          href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20Upgrade%20akun%20PayuO%20saya%20ke%20versi%20VIP/Pro." 
+          href="https://wa.me/6285124070705?text=Halo%20Admin,%20saya%20ingin%20Upgrade%20akun%20PayuO%20saya%20ke%20versi%20VIP/Pro." 
           target="_blank" 
           rel="noopener noreferrer"
           className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-primary to-[#2DD4BF] text-white rounded-full text-xs font-bold shadow-md hover:shadow-glow transition-all transform hover:-translate-y-0.5"
