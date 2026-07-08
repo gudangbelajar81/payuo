@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
 
 :root {
   /* Teal / Mint Green Aesthetic (Reference UI) */
@@ -31,6 +31,10 @@
   --shadow-md: 0 12px 24px -6px rgb(0 0 0 / 0.05), 0 4px 10px -4px rgb(0 0 0 / 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   
+  /* Typography */
+  --font-heading: 'Helvetica Now', 'Gotham', 'Nunito', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+  
   /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -59,10 +63,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: var(--font-body);
   background-color: var(--background);
   color: var(--secondary);
   line-height: 1.5;
@@ -71,9 +76,14 @@ body {
 
 /* Typography Utilities */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
   font-weight: 600;
   color: var(--secondary);
 }
+
+.font-heading { font-family: var(--font-heading); }
+.font-body { font-family: var(--font-body); }
 
 .text-primary { color: var(--primary); }
 .text-secondary { color: var(--secondary-light); }
