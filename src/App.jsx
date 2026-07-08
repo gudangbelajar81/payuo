@@ -79,6 +79,10 @@ function App() {
     let imageUrl = null;
 
     try {
+      if (!supabase) {
+        throw new Error("Kunci Supabase belum terpasang atau Vercel belum di-Redeploy! Silakan ke Dashboard Vercel > Deployments > Redeploy.");
+      }
+
       if (newProduct.file) {
         // 1. Kompres Gambar Otomatis (Target: di bawah 100KB)
         const options = {
