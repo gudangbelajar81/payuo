@@ -188,7 +188,7 @@ function App() {
         
         <nav className="flex flex-col gap-md w-full px-sm flex-1">
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'text-[#94A3B8] hover:bg-white/10 hover:text-white'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-[#F0FDFA] text-[#0D9488] hover:bg-[#CCFBF1] border border-transparent hover:border-[#99F6E4] shadow-sm'}`}
             onClick={() => setActiveTab('kasir')}
             title="Kasir Utama"
           >
@@ -197,7 +197,7 @@ function App() {
           </button>
           
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'text-[#94A3B8] hover:bg-white/10 hover:text-white'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-[#F0FDFA] text-[#0D9488] hover:bg-[#CCFBF1] border border-transparent hover:border-[#99F6E4] shadow-sm'}`}
             onClick={() => setActiveTab('kasbon')}
             title="Buku Kasbon"
           >
@@ -206,7 +206,7 @@ function App() {
           </button>
           
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'text-[#94A3B8] hover:bg-white/10 hover:text-white'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-[#F0FDFA] text-[#0D9488] hover:bg-[#CCFBF1] border border-transparent hover:border-[#99F6E4] shadow-sm'}`}
             onClick={() => setActiveTab('produk')}
             title="Kelola Produk"
           >
@@ -215,7 +215,7 @@ function App() {
           </button>
           
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 text-[#94A3B8] hover:bg-white/10 hover:text-white`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-[#F0FDFA] text-[#0D9488] hover:bg-[#CCFBF1] border border-transparent hover:border-[#99F6E4] shadow-sm`}
             title="Laporan"
           >
             <LayoutDashboard size={24} />
@@ -223,7 +223,7 @@ function App() {
           </button>
 
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 text-[#94A3B8] hover:bg-white/10 hover:text-white mt-auto mb-lg`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-[#F0FDFA] text-[#0D9488] hover:bg-[#CCFBF1] border border-transparent hover:border-[#99F6E4] shadow-sm mt-auto mb-lg`}
             title="Pengaturan"
           >
             <Settings size={24} />
