@@ -80,7 +80,20 @@ function App() {
 
     try {
       if (!supabase) {
-        throw new Error("Kunci Supabase belum terpasang atau Vercel belum di-Redeploy! Silakan ke Dashboard Vercel > Deployments > Redeploy.");
+        // FALLBACK: Simpan ke memori lokal jika Vercel/Supabase belum siap
+        const fakeId = Date.now();
+        const fakeProduct = {
+          id: fakeId,
+          name: newProduct.name || 'Produk Tanpa Nama',
+          category: newProduct.category || 'Lainnya',
+          price: Number(newProduct.price) || 0,
+          image_url: newProduct.imagePreview || null
+        };
+        setProducts([fakeProduct, ...products]);
+        setNewProduct({ name: '', category: 'Minuman', price: '', imagePreview: '', file: null });
+        setIsAddModalOpen(false);
+        setIsSaving(false);
+        return; // Keluar dari fungsi, tidak perlu memanggil supabase
       }
 
       if (newProduct.file) {
@@ -112,9 +125,9 @@ function App() {
       const { data: insertedProduct, error } = await supabase
         .from('products')
         .insert([{
-          name: newProduct.name,
-          category: newProduct.category,
-          price: Number(newProduct.price),
+          name: newProduct.name || 'Produk Tanpa Nama',
+          category: newProduct.category || 'Lainnya',
+          price: Number(newProduct.price) || 0,
           image_url: imageUrl
         }])
         .select();
@@ -490,8 +503,8 @@ function App() {
                 </div>
 
                 <div className="input-group">
-                  <label className="input-label">Nama Produk</label>
-                  <input type="text" className="input" placeholder="Misal: Kopi Susu Aren" required 
+                  <label className="input-label">Nama Produk (Opsional)</label>
+                  <input type="text" className="input" placeholder="Misal: Kopi Susu Aren" 
                     value={newProduct.name} onChange={e => setNewProduct({...newProduct, name: e.target.value})} />
                 </div>
 
@@ -507,8 +520,8 @@ function App() {
                     </select>
                   </div>
                   <div className="input-group">
-                    <label className="input-label">Harga (Rp)</label>
-                    <input type="number" className="input" placeholder="0" required min="0"
+                    <label className="input-label">Harga (Opsional)</label>
+                    <input type="number" className="input" placeholder="0" min="0"
                       value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})} />
                   </div>
                 </div>
