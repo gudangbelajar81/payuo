@@ -478,8 +478,8 @@ function App() {
                    ) : products.map(product => (
                      <tr key={product.id} className="border-b border-border hover:bg-surface-hover transition-fast">
                        <td className="p-md">
-                         <div className="w-14 h-14 rounded-2xl bg-slate-50 overflow-hidden flex items-center justify-center text-2xl border border-slate-100 shadow-sm">
-                           {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" /> : '📦'}
+                         <div style={{ width: '56px', height: '56px', borderRadius: '1rem', backgroundColor: '#f8fafc', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', border: '1px solid #f1f5f9', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
+                           {product.image_url ? <img src={product.image_url} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : '📦'}
                          </div>
                        </td>
                        <td className="p-md font-medium">{product.name}</td>
