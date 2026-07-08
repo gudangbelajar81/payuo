@@ -86,13 +86,13 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
                 <span className="text-slate-500 font-medium">/ bulan</span>
               </div>
               <p className="text-sm text-slate-500 mb-6 border-b border-slate-100 pb-4">
-                Akses ke seluruh fitur canggih PayuO menggunakan HP atau Tablet Anda sendiri.
+                <strong>Pantau dari Jauh!</strong> Anda sedang liburan di Bali, tapi toko di Jakarta? Omset & stok tetap terpantau <i>real-time</i> dari HP Anda.
               </p>
               
               <ul className="space-y-3 flex-1">
                 <li className="flex items-start gap-2 text-sm text-slate-700">
                   <Check size={18} className="text-teal-500 shrink-0 mt-0.5" /> 
-                  <span><strong>Transaksi Tanpa Batas</strong> (Unlimited)</span>
+                  <span><strong>Multi-Device</strong> (HP/PC berbeda bersamaan)</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-slate-700">
                   <Check size={18} className="text-teal-500 shrink-0 mt-0.5" /> 
@@ -135,13 +135,13 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
                 </div>
               </div>
               <p className="text-sm text-slate-400 mb-6 border-b border-slate-700 pb-4">
-                Solusi All-in-One. Dapatkan alat fisik untuk kasir profesional di toko Anda.
+                Solusi All-in-One. Dapatkan alat kasir fisik, ditambah kehebatan pantau jarak jauh layaknya paket SaaS.
               </p>
               
               <ul className="space-y-3 flex-1">
                 <li className="flex items-start gap-2 text-sm text-slate-200">
                   <ShieldCheck size={18} className="text-amber-400 shrink-0 mt-0.5" /> 
-                  <span>Semua Fitur di Paket SaaS (Unlimited)</span>
+                  <span>Bisa Pantau Jarak Jauh (Multi-Device)</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-slate-200">
                   <Printer size={18} className="text-amber-400 shrink-0 mt-0.5" /> 
@@ -181,7 +181,7 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
                 </div>
               </div>
               <p className="text-sm text-slate-400 mb-6 border-b border-slate-600 pb-4">
-                Instalasi mandiri di HP Android/PC Kasir. Data aman di perangkat sendiri.
+                Data aman di perangkat sendiri. <strong>Kekurangan:</strong> Hanya bisa di 1 HP/PC dan Bos <strong>TIDAK BISA</strong> pantau dari jauh.
               </p>
               
               <ul className="space-y-3 flex-1">
@@ -193,9 +193,9 @@ export default function PricingModal({ onClose, adminWaNumber = '6285124070705' 
                   <Printer size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
                   <span><strong>BONUS: Printer Listrik/Portable</strong> (Undian Acak)</span>
                 </li>
-                <li className="flex items-start gap-2 text-sm text-slate-200">
-                  <Check size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
-                  <span>Transaksi & Produk Tanpa Batas</span>
+                <li className="flex items-start gap-2 text-sm text-slate-400">
+                  <X size={18} className="text-red-400 shrink-0 mt-0.5" /> 
+                  <span className="line-through">Pantau Jarak Jauh & Multi-Device</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-slate-200">
                   <Check size={18} className="text-indigo-400 shrink-0 mt-0.5" /> 
