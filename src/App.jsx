@@ -249,19 +249,19 @@ function App() {
           
           <div className="flex items-center gap-md">
             <div className="relative hidden md:block">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-light" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#94A3B8]" size={16} />
               <input 
                 type="text" 
                 placeholder="Cari produk..." 
-                className="input pl-10 w-64"
+                className="pl-11 pr-4 py-2.5 w-72 bg-slate-50 border-transparent rounded-full shadow-inner focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-transparent transition-all outline-none text-sm font-medium"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <button className="btn-icon">
-              <Bell size={20} />
+            <button className="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
+              <Bell size={20} strokeWidth={1.5} />
             </button>
-            <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center font-bold text-primary border border-primary">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#2DD4BF] shadow-md flex items-center justify-center font-bold text-white border-2 border-white ring-2 ring-slate-50">
               A
             </div>
           </div>
@@ -385,20 +385,23 @@ function App() {
           <div className="flex-1 p-lg bg-background overflow-y-auto animate-fade-in relative">
              <div className="flex justify-between items-center mb-md">
                 <h2 className="text-xl font-bold text-secondary">Daftar Produk</h2>
-                <button className="btn btn-primary" onClick={() => setIsAddModalOpen(true)}>
-                  <Plus size={18} /> Tambah Produk
+                <button 
+                  className="flex items-center gap-2 bg-gradient-to-br from-primary to-[#2DD4BF] text-white px-6 py-3 rounded-full font-bold shadow-md hover:shadow-glow transition-all duration-300 transform hover:-translate-y-0.5" 
+                  onClick={() => setIsAddModalOpen(true)}
+                >
+                  <Plus size={18} strokeWidth={2.5} /> Tambah Produk
                 </button>
              </div>
              
              <div className="card overflow-hidden">
                <table className="w-full text-left" style={{ borderCollapse: 'collapse' }}>
                  <thead>
-                   <tr className="bg-surface-hover border-b border-border text-secondary-light">
-                     <th className="p-md font-semibold text-sm">Gambar</th>
-                     <th className="p-md font-semibold text-sm">Nama Produk</th>
-                     <th className="p-md font-semibold text-sm">Kategori</th>
-                     <th className="p-md font-semibold text-sm">Harga</th>
-                     <th className="p-md font-semibold text-sm text-center">Aksi</th>
+                   <tr className="bg-slate-50/50 border-b border-slate-100 text-slate-400">
+                     <th className="p-md font-bold text-xs uppercase tracking-widest">Gambar</th>
+                     <th className="p-md font-bold text-xs uppercase tracking-widest">Nama Produk</th>
+                     <th className="p-md font-bold text-xs uppercase tracking-widest">Kategori</th>
+                     <th className="p-md font-bold text-xs uppercase tracking-widest">Harga</th>
+                     <th className="p-md font-bold text-xs uppercase tracking-widest text-center">Aksi</th>
                    </tr>
                  </thead>
                  <tbody>
@@ -409,7 +412,7 @@ function App() {
                    ) : products.map(product => (
                      <tr key={product.id} className="border-b border-border hover:bg-surface-hover transition-fast">
                        <td className="p-md">
-                         <div className="w-12 h-12 rounded-md bg-surface-hover overflow-hidden flex items-center justify-center text-2xl border border-border">
+                         <div className="w-14 h-14 rounded-2xl bg-slate-50 overflow-hidden flex items-center justify-center text-2xl border border-slate-100 shadow-sm">
                            {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" /> : '📦'}
                          </div>
                        </td>

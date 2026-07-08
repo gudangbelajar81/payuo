@@ -148,10 +148,10 @@ h1, h2, h3, h4, h5, h6 {
 /* UI Components */
 .card {
   background-color: var(--surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  border-radius: 24px;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
 }
 
 .card:hover {
@@ -286,14 +286,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .topbar {
-  height: 70px;
-  background-color: var(--surface);
-  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--spacing-lg);
-  z-index: 5;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .pos-area {
