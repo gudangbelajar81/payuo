@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './lib/supabaseClient';
 import imageCompression from 'browser-image-compression';
+import Auth from './components/Auth';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -24,16 +25,17 @@ import {
 const DUMMY_PRODUCTS = [];
 
 function App() {
+  const [session, setSession] = useState(null);
   const [activeTab, setActiveTab] = useState('kasir');
   const [cart, setCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch Products on Load
+  // Fetch Products on Session Load
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (session) fetchProducts();
+  }, [session]);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -52,7 +54,23 @@ function App() {
 
   // Modal State
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Authentication State Listener
+  useEffect(() => {
+    if (!supabase) return;
+    
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   const [newProduct, setNewProduct] = useState({
     name: '',
     category: 'Minuman',
@@ -60,7 +78,6 @@ function App() {
     imagePreview: '',
     file: null
   });
-  const [isSaving, setIsSaving] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -194,8 +211,12 @@ function App() {
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  if (!session) {
+    return <Auth onLogin={setSession} />;
+  }
+
   return (
-    <div className="app-container md:pb-0" style={{ paddingBottom: '70px' }}>
+    <div className="flex h-screen bg-background font-sans overflow-hidden">
       {/* SIDEBAR (Desktop Minimalist Lux) */}
       <aside className="sidebar hidden md:flex shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
         <div className="mb-xl flex flex-col items-center justify-center">
@@ -259,12 +280,13 @@ function App() {
           <div className="relative group w-full flex justify-center mt-auto mb-lg">
             <button 
               className="flex flex-col items-center justify-center gap-2 w-full"
-              title="Pengaturan"
+              title="Keluar"
+              onClick={() => supabase.auth.signOut()}
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
-                <span className="text-2xl filter drop-shadow-sm group-hover:animate-spin transition-transform" style={{ display: 'inline-block' }}>⚙️</span>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 bg-red-50 text-red-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(239,68,68,0.1)] border border-red-100`}>
+                <span className="text-2xl filter drop-shadow-sm transition-transform" style={{ display: 'inline-block' }}>🚪</span>
               </div>
-              <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-slate-400 group-hover:text-primary transition-colors">Setting</span>
+              <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-red-400 group-hover:text-red-500 transition-colors">Logout</span>
             </button>
           </div>
         </nav>
