@@ -251,20 +251,27 @@ export default function PricingModal({ onClose }) {
 
           {/* FREE */}
           <div style={S.card('free')} className="pg-card">
-            <div style={S.cardLabel('#475569')}>🎁 Paket Pemula</div>
+            <div style={{...S.cardLabel('#fbbf24'),fontSize:'11px'}}>🎁 TRIAL GRATIS 7 HARI</div>
             <div style={S.price}>Gratis</div>
-            <div style={S.priceSuffix}>Trial 7 Hari</div>
+            <div style={{...S.priceSuffix,color:'#fbbf24',fontWeight:700}}>AKSES PENUH — Tanpa Kartu Kredit!</div>
             <hr style={S.divider}/>
-            <div style={S.desc}>Coba dulu sebelum memutuskan. Cocok untuk kenalan dengan sistem kasir digital.</div>
-            <div style={S.features}>
-              <div style={S.feat(true)}><span style={S.featIcon(true)}><Check size={13}/></span>Transaksi & Produk Dasar</div>
-              <div style={S.feat(true)}><span style={S.featIcon(true)}><Check size={13}/></span>Laporan Harian Sederhana</div>
-              <div style={S.feat(false)}><span style={S.featIcon(false)}><X size={13}/></span>Multi-Device / Jarak Jauh</div>
-              <div style={S.feat(false)}><span style={S.featIcon(false)}><X size={13}/></span>Kasbon & Hutang Pelanggan</div>
-              <div style={S.feat(false)}><span style={S.featIcon(false)}><X size={13}/></span>Cetak Struk Bluetooth</div>
-              <div style={S.feat(false)}><span style={S.featIcon(false)}><X size={13}/></span>Export Laporan</div>
+            <div style={{...S.desc,color:'#94a3b8'}}>
+              <strong style={{color:'#fbbf24'}}>Coba dulu, bayar kalau ketagihan!</strong> Nikmati SEMUA fitur premium selama 7 hari penuh — tidak ada yang dibatasi.
             </div>
-            <button style={S.btn('ghost')} className="pg-btn" onClick={onClose}>Lanjutkan Trial Dulu</button>
+            <div style={S.features}>
+              <div style={S.feat(true,'#fbbf24')}><span style={S.featIcon(true,'#fbbf24')}><Zap size={13}/></span><strong>SEMUA Fitur Premium</strong> terbuka penuh!</div>
+              <div style={S.feat(true,'#fbbf24')}><span style={S.featIcon(true,'#fbbf24')}><Users size={13}/></span>Multi-Device (sampai 5 HP)</div>
+              <div style={S.feat(true,'#fbbf24')}><span style={S.featIcon(true,'#fbbf24')}><Eye size={13}/></span>Pantau Toko dari Jarak Jauh</div>
+              <div style={S.feat(true,'#fbbf24')}><span style={S.featIcon(true,'#fbbf24')}><Check size={13}/></span>Kasbon & Hutang Pelanggan</div>
+              <div style={S.feat(true,'#fbbf24')}><span style={S.featIcon(true,'#fbbf24')}><Printer size={13}/></span>Cetak Struk Bluetooth</div>
+              <div style={S.feat(true,'#fbbf24')}><span style={S.featIcon(true,'#fbbf24')}><TrendingUp size={13}/></span>Laporan Laba Rugi + Export</div>
+            </div>
+            <div style={{...S.highlight,background:'rgba(251,191,36,0.07)',border:'1px solid rgba(251,191,36,0.25)',color:'#fbbf24',marginTop:'10px'}}>
+              ⏳ Setelah 7 hari, pilih paket agar semua data & riwayat transaksi Anda tidak hilang!
+            </div>
+            <button style={{...S.btn('ghost'),background:'rgba(251,191,36,0.1)',color:'#fbbf24',border:'1px solid rgba(251,191,36,0.2)'}} className="pg-btn" onClick={onClose}>
+              Kembali & Nikmati Trial →
+            </button>
           </div>
 
           {/* SAAS */}

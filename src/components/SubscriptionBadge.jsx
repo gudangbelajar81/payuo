@@ -56,8 +56,22 @@ export default function SubscriptionBadge({ session, onOpenPricing }) {
       )}
 
       {isTrial && (
-        <div className="flex items-center gap-1 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-600 rounded-full text-xs font-bold shadow-sm">
-          <Clock size={14} /> Trial Sisa {trialDaysLeft > 0 ? trialDaysLeft : 0} Hari
+        <div style={{
+          display:'flex',alignItems:'center',gap:'5px',
+          padding:'4px 12px',
+          background:'linear-gradient(135deg,rgba(251,191,36,0.15),rgba(245,158,11,0.1))',
+          border:'1px solid rgba(251,191,36,0.4)',
+          borderRadius:'999px',
+          fontSize:'11px',fontWeight:700,
+          color:'#f59e0b',
+          cursor:'pointer',
+        }} onClick={onOpenPricing}>
+          <Clock size={13} />
+          {trialDaysLeft > 3
+            ? `✨ AKSES PENUH — Sisa ${trialDaysLeft} Hari`
+            : trialDaysLeft > 0
+            ? `⚠️ Trial Habis ${trialDaysLeft} Hari Lagi!`
+            : '🔴 Trial Habis!'}
         </div>
       )}
 
