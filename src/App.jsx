@@ -188,46 +188,46 @@ function App() {
         
         <nav className="flex flex-col gap-md w-full px-sm flex-1">
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#E6FFFA] hover:shadow-glow'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow'}`}
             onClick={() => setActiveTab('kasir')}
             title="Kasir Utama"
           >
-            <ShoppingBag size={24} />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Kasir</span>
+            <ShoppingBag size={26} strokeWidth={1.5} className="drop-shadow-sm" />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Kasir</span>
           </button>
           
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#E6FFFA] hover:shadow-glow'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow'}`}
             onClick={() => setActiveTab('kasbon')}
             title="Buku Kasbon"
           >
-            <Users size={24} />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Kasbon</span>
+            <Users size={26} strokeWidth={1.5} className="drop-shadow-sm" />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Kasbon</span>
           </button>
           
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#E6FFFA] hover:shadow-glow'}`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-glow' : 'bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow'}`}
             onClick={() => setActiveTab('produk')}
             title="Kelola Produk"
           >
-            <Package size={24} />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Produk</span>
+            <Package size={26} strokeWidth={1.5} className="drop-shadow-sm" />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Produk</span>
           </button>
           
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-transparent text-[#0D9488] hover:bg-[#E6FFFA] hover:shadow-glow`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow`}
             title="Laporan"
           >
-            <LayoutDashboard size={24} />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Laporan</span>
+            <LayoutDashboard size={26} strokeWidth={1.5} className="drop-shadow-sm" />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Laporan</span>
           </button>
 
           <button 
-            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-transparent text-[#0D9488] hover:bg-[#E6FFFA] hover:shadow-glow mt-auto mb-lg`}
+            className={`flex flex-col items-center justify-center gap-1 w-full py-md rounded-2xl transition-all duration-300 bg-transparent text-[#0D9488] hover:bg-[#F0FDFA] hover:shadow-glow mt-auto mb-lg`}
             title="Pengaturan"
           >
-            <Settings size={24} />
-            <span style={{ fontSize: '11px' }} className="font-bold mt-1">Setting</span>
+            <Settings size={26} strokeWidth={1.5} className="drop-shadow-sm" />
+            <span style={{ fontSize: '11px' }} className="font-bold mt-1 tracking-wide">Setting</span>
           </button>
         </nav>
       </aside>
