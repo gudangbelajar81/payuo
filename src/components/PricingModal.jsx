@@ -358,6 +358,96 @@ export default function PricingModal({ onClose }) {
           </div>
 
         </div>
+
+        {/* ─── PRINTER BANNER ─── */}
+        <div style={{
+          margin:'0 28px 28px',
+          borderRadius:'20px',
+          overflow:'hidden',
+          border:'1px solid rgba(236,72,153,0.25)',
+          background:'linear-gradient(135deg, #0f0a1e 0%, #1a0a2e 40%, #0a1628 100%)',
+          boxShadow:'0 0 60px rgba(236,72,153,0.08)',
+          position:'relative',
+        }}>
+          {/* Glow blobs */}
+          <div style={{position:'absolute',top:'-40px',right:'80px',width:'200px',height:'200px',borderRadius:'50%',background:'rgba(168,85,247,0.12)',filter:'blur(60px)',pointerEvents:'none'}}></div>
+          <div style={{position:'absolute',bottom:'-40px',left:'120px',width:'160px',height:'160px',borderRadius:'50%',background:'rgba(236,72,153,0.1)',filter:'blur(50px)',pointerEvents:'none'}}></div>
+
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'20px',padding:'22px 28px',position:'relative'}}>
+            
+            {/* Left: Icon + Text */}
+            <div style={{display:'flex',alignItems:'center',gap:'18px'}}>
+              {/* Printer illustration */}
+              <div style={{
+                width:'64px',height:'64px',borderRadius:'16px',flexShrink:0,
+                background:'linear-gradient(135deg,#7c3aed,#ec4899)',
+                display:'flex',alignItems:'center',justifyContent:'center',
+                boxShadow:'0 8px 24px rgba(124,58,237,0.4)',
+                fontSize:'28px',
+              }}>🖨️</div>
+              <div>
+                <div style={{
+                  display:'inline-flex',alignItems:'center',gap:'5px',
+                  background:'rgba(236,72,153,0.15)',
+                  border:'1px solid rgba(236,72,153,0.3)',
+                  borderRadius:'999px',padding:'2px 10px',
+                  fontSize:'10px',fontWeight:700,color:'#f472b6',
+                  letterSpacing:'0.08em',marginBottom:'6px',
+                }}>🔥 AKSESORIS KASIR</div>
+                <div style={{fontSize:'1.1rem',fontWeight:900,color:'#fff',marginBottom:'4px',lineHeight:1.2}}>
+                  Butuh Printer Kasir Thermal? <span style={{color:'#e879f9'}}>Kami Jual Sendiri!</span>
+                </div>
+                <div style={{fontSize:'0.78rem',color:'#94a3b8',maxWidth:'480px',lineHeight:1.5}}>
+                  Printer <strong style={{color:'#e2e8f0'}}>Bluetooth Portabel</strong> & <strong style={{color:'#e2e8f0'}}>Thermal Listrik</strong> untuk semua merk HP — langsung konek ke PayuO tanpa setting ribet. Stok terbatas!
+                </div>
+                {/* Mini features */}
+                <div style={{display:'flex',gap:'16px',marginTop:'10px',flexWrap:'wrap'}}>
+                  {[
+                    {icon:'⚡',text:'Cetak < 3 detik'},
+                    {icon:'📱',text:'Konek via Bluetooth'},
+                    {icon:'🔋',text:'Versi Portabel tersedia'},
+                    {icon:'📦',text:'Siap Kirim ke Seluruh Indonesia'},
+                  ].map((f,i)=>(
+                    <div key={i} style={{display:'flex',alignItems:'center',gap:'5px',fontSize:'0.72rem',color:'#94a3b8'}}>
+                      <span>{f.icon}</span><span>{f.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: CTA */}
+            <div style={{display:'flex',flexDirection:'column',gap:'10px',alignItems:'flex-end',flexShrink:0}}>
+              <div style={{textAlign:'right'}}>
+                <div style={{fontSize:'0.7rem',color:'#64748b',marginBottom:'2px'}}>Mulai dari</div>
+                <div style={{fontSize:'1.6rem',fontWeight:900,color:'#fff',lineHeight:1}}>Rp 299rb</div>
+                <div style={{fontSize:'0.7rem',color:'#a78bfa'}}>Garansi Kompatibel PayuO ✓</div>
+              </div>
+              <button
+                onClick={()=>handleWA('Printer Kasir Thermal untuk PayuO')}
+                className="pg-btn"
+                style={{
+                  padding:'12px 24px',
+                  background:'linear-gradient(135deg,#7c3aed,#ec4899)',
+                  border:'none',borderRadius:'14px',
+                  color:'#fff',fontWeight:800,fontSize:'0.85rem',
+                  cursor:'pointer',
+                  boxShadow:'0 8px 24px rgba(124,58,237,0.4)',
+                  display:'flex',alignItems:'center',gap:'8px',
+                  whiteSpace:'nowrap',
+                  transition:'all 0.2s',
+                }}
+              >
+                <Printer size={16}/> Tanya Harga via WhatsApp →
+              </button>
+              <div style={{fontSize:'0.68rem',color:'#475569',textAlign:'right'}}>
+                💬 Respon cepat · Bisa COD area tertentu
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   );
