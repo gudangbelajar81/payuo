@@ -39,33 +39,34 @@ export default function Auth({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center items-center p-md relative overflow-hidden">
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--background)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 'var(--spacing-md)', position: 'relative', overflow: 'hidden' }}>
       {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[100px] -z-10"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#F59E0B]/20 rounded-full blur-[100px] -z-10"></div>
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '40%', height: '40%', backgroundColor: 'rgba(13, 148, 136, 0.2)', borderRadius: '50%', filter: 'blur(100px)', zIndex: -10 }}></div>
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40%', height: '40%', backgroundColor: 'rgba(245, 158, 11, 0.2)', borderRadius: '50%', filter: 'blur(100px)', zIndex: -10 }}></div>
 
-      <div className="card w-full max-w-md p-xl animate-fade-in relative z-10" style={{ backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.4)' }}>
-        <div className="flex justify-center mb-lg">
-          <div className="w-16 h-16 bg-gradient-to-tr from-primary to-[#F59E0B] rounded-2xl flex items-center justify-center text-white text-3xl shadow-glow">
+      <div className="card" style={{ width: '100%', maxWidth: '400px', padding: '2rem', position: 'relative', zIndex: 10, backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.8)' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ width: '4rem', height: '4rem', background: 'linear-gradient(to top right, var(--primary), #F59E0B)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2rem', boxShadow: '0 0 20px rgba(13, 148, 136, 0.4)' }}>
             🛒
           </div>
         </div>
         
-        <h2 className="text-2xl font-bold text-center mb-sm text-text">
+        <h2 className="text-2xl font-bold" style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
           {isLogin ? 'Selamat Datang Kembali' : 'Mulai Bisnis Anda'}
         </h2>
-        <p className="text-center text-secondary mb-xl">
+        <p className="text-secondary" style={{ textAlign: 'center', marginBottom: '2rem' }}>
           {isLogin ? 'Masuk ke dashboard PayuO Anda' : 'Daftar sekarang, gratis 14 hari pertama!'}
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-md">
+        <form onSubmit={handleSubmit} className="input-group" style={{ gap: '1rem' }}>
           <div className="input-group">
             <label className="input-label">Email</label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary" size={20} />
+            <div style={{ position: 'relative' }}>
+              <Mail style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--secondary-light)' }} size={20} />
               <input 
                 type="email" 
-                className="input pl-11" 
+                className="input" 
+                style={{ paddingLeft: '2.75rem', width: '100%' }}
                 placeholder="nama@toko.com" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -76,11 +77,12 @@ export default function Auth({ onLogin }) {
 
           <div className="input-group">
             <label className="input-label">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary" size={20} />
+            <div style={{ position: 'relative' }}>
+              <Lock style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--secondary-light)' }} size={20} />
               <input 
                 type="password" 
-                className="input pl-11" 
+                className="input" 
+                style={{ paddingLeft: '2.75rem', width: '100%' }}
                 placeholder="••••••••" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -92,16 +94,17 @@ export default function Auth({ onLogin }) {
           <button 
             type="submit" 
             disabled={loading}
-            className="btn btn-primary w-full mt-sm py-md text-lg flex justify-center items-center gap-2 transition-all hover:scale-[1.02]"
+            className="btn btn-primary"
+            style={{ width: '100%', marginTop: '1rem', padding: '0.75rem', fontSize: '1.125rem' }}
           >
             {loading ? <Loader2 className="animate-spin" size={24} /> : (isLogin ? 'Masuk Sekarang' : 'Daftar & Mulai Jualan')}
           </button>
         </form>
 
-        <div className="mt-lg text-center">
+        <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
           <button 
             onClick={() => setIsLogin(!isLogin)}
-            className="text-primary hover:text-primary-dark font-medium transition-colors"
+            style={{ color: 'var(--primary)', fontWeight: '500', background: 'none', border: 'none', cursor: 'pointer' }}
           >
             {isLogin ? 'Belum punya akun? Daftar disini' : 'Sudah punya akun? Masuk'}
           </button>
