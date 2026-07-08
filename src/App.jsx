@@ -118,12 +118,13 @@ function App() {
       }
 
       if (newProduct.file) {
-        // 1. Kompres Gambar Otomatis (Target: di bawah 100KB)
+        // 1. Kompres Gambar Otomatis (Target: maks 50KB, resolusi maks 400px)
         const options = {
-          maxSizeMB: 0.1, // Maksimal 100 KB
-          maxWidthOrHeight: 800, // Maksimal lebar/tinggi 800px (Sangat cukup untuk HP)
+          maxSizeMB: 0.05,          // Maksimal 50 KB
+          maxWidthOrHeight: 400,    // Maks 400px — cukup untuk thumbnail produk
           useWebWorker: true,
-          initialQuality: 0.8
+          initialQuality: 0.7,
+          fileType: 'image/webp',   // Format WebP = lebih kecil dari JPG
         };
         const compressedFile = await imageCompression(newProduct.file, options);
         
@@ -505,7 +506,7 @@ function App() {
         {/* ADD PRODUCT MODAL */}
         {isAddModalOpen && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in" style={{ backgroundColor: 'rgba(0,0,0,0.5)', position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
-            <div className="card w-full max-w-md p-lg m-md bg-white relative" style={{ maxHeight: '95vh', overflowY: 'auto' }}>
+          <div className="card w-full max-w-md m-md bg-white relative" style={{ maxHeight: '92vh', display: 'flex', flexDirection: 'column' }}>
               <button 
                 onClick={() => setIsAddModalOpen(false)}
                 className="absolute top-4 right-4 btn-icon"
@@ -513,13 +514,13 @@ function App() {
                 <X size={20} />
               </button>
               
-              <h2 className="text-xl font-bold mb-md">Tambah Produk Baru</h2>
+              <h2 className="text-xl font-bold mb-md" style={{ padding: '24px 24px 0' }}>Tambah Produk Baru</h2>
               
-              <form onSubmit={handleSaveProduct} className="flex flex-col gap-md">
+              <form onSubmit={handleSaveProduct} className="flex flex-col gap-md" style={{ flex: 1, overflowY: 'auto', padding: '0 24px', paddingBottom: '8px' }}>
                 {/* Image Upload Area */}
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-lg p-md cursor-pointer hover:bg-surface-hover transition-fast" onClick={() => document.getElementById('imageUpload').click()}>
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-surface-hover transition-fast" style={{ minHeight: '90px', maxHeight: '90px', overflow: 'hidden' }} onClick={() => document.getElementById('imageUpload').click()}>
                   {newProduct.imagePreview ? (
-                    <img src={newProduct.imagePreview} alt="Preview" style={{ height: '120px', width: '100%', objectFit: 'contain' }} className="rounded-md" />
+                    <img src={newProduct.imagePreview} alt="Preview" style={{ height: '80px', width: '100%', objectFit: 'contain' }} className="rounded-md" />
                   ) : (
                     <div className="flex flex-col items-center gap-sm text-secondary-light p-md">
                       <ImageIcon size={32} />
@@ -557,6 +558,18 @@ function App() {
                   {isSaving ? 'Menyimpan...' : 'Simpan Produk'}
                 </button>
               </form>
+
+              {/* Sticky footer tombol simpan */}
+              <div style={{ padding: '12px 24px 20px', borderTop: '1px solid #f1f5f9', background: '#fff', flexShrink: 0 }}>
+                <button
+                  type="button"
+                  onClick={handleSaveProduct}
+                  disabled={isSaving}
+                  className="btn btn-primary w-full py-md text-lg flex justify-center items-center gap-2"
+                >
+                  {isSaving ? 'Menyimpan...' : '✅ Simpan Produk'}
+                </button>
+              </div>
             </div>
           </div>
         )}
