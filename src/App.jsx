@@ -20,7 +20,10 @@ import {
   Package,
   Edit2,
   X,
-  Image as ImageIcon
+  Image as ImageIcon,
+  ChevronRight,
+  LogOut,
+  ChevronDown
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
@@ -82,6 +85,28 @@ function App() {
     imagePreview: '',
     file: null
   });
+
+  const defaultCategories = ['Minuman', 'Makanan', 'Cemilan', 'Sembako', 'Lainnya'];
+  const [customCategories, setCustomCategories] = useState(() => {
+    try {
+      const saved = localStorage.getItem('payuo_custom_categories');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const usedCategories = new Set(products.map(p => p.category));
+
+  const handleDeleteCategory = (catToDelete) => {
+    if (usedCategories.has(catToDelete)) {
+      alert(`Kategori "${catToDelete}" masih digunakan oleh produk. Ubah/hapus dulu produk tersebut.`);
+      return;
+    }
+    const updated = customCategories.filter(c => c !== catToDelete);
+    setCustomCategories(updated);
+    localStorage.setItem('payuo_custom_categories', JSON.stringify(updated));
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -158,6 +183,12 @@ function App() {
       
       if (insertedProduct) {
         setProducts([insertedProduct[0], ...products]);
+      }
+      
+      if (newProduct.category && !defaultCategories.includes(newProduct.category) && !customCategories.includes(newProduct.category)) {
+        const updated = [...customCategories, newProduct.category];
+        setCustomCategories(updated);
+        localStorage.setItem('payuo_custom_categories', JSON.stringify(updated));
       }
       
       setNewProduct({ name: '', category: 'Minuman', price: '', imagePreview: '', file: null });
@@ -539,13 +570,14 @@ function App() {
                 <div className="grid grid-cols-2 gap-sm">
                   <div className="input-group">
                     <label className="input-label">Kategori</label>
-                    <select className="input bg-white" value={newProduct.category} onChange={e => setNewProduct({...newProduct, category: e.target.value})}>
-                      <option>Minuman</option>
-                      <option>Makanan</option>
-                      <option>Cemilan</option>
-                      <option>Sembako</option>
-                      <option>Lainnya</option>
-                    </select>
+                    <CategorySelect 
+                      value={newProduct.category} 
+                      onChange={val => setNewProduct({...newProduct, category: val})}
+                      defaultCategories={defaultCategories}
+                      customCategories={customCategories}
+                      usedCategories={usedCategories}
+                      onDelete={handleDeleteCategory}
+                    />
                   </div>
                   <div className="input-group">
                     <label className="input-label">Harga (Opsional)</label>
@@ -606,6 +638,71 @@ function App() {
       {/* Modals */}
       {isPricingModalOpen && (
         <PricingModal onClose={() => setIsPricingModalOpen(false)} />
+      )}
+    </div>
+  );
+}
+
+function CategorySelect({ value, onChange, defaultCategories, customCategories, usedCategories, onDelete }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const allCats = [...defaultCategories, ...customCategories];
+
+  return (
+    <div className="relative">
+      <div className="flex items-center relative">
+        <input 
+          type="text" 
+          className="input bg-white w-full pr-10" 
+          placeholder="Ketik kategori baru..."
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setIsOpen(true)}
+          onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+        />
+        <div className="absolute right-3 text-slate-400 pointer-events-none">
+          <ChevronDown size={16} />
+        </div>
+      </div>
+      
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50 max-h-48 overflow-y-auto">
+          {allCats.length === 0 ? <div className="p-2 text-sm text-slate-400">Ketik untuk tambah</div> : null}
+          {allCats.map((cat, idx) => {
+            const isDefault = defaultCategories.includes(cat);
+            const isUsed = usedCategories.has(cat);
+            return (
+              <div 
+                key={idx}
+                className="flex items-center justify-between p-2 hover:bg-slate-50 cursor-pointer transition-colors"
+                onMouseDown={() => onChange(cat)}
+              >
+                <span className="text-sm text-slate-700">{cat}</span>
+                {!isDefault && (
+                  <button 
+                    type="button"
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      if (!isUsed) onDelete(cat);
+                    }}
+                    className={`p-1 rounded transition-all ${isUsed ? 'opacity-20 cursor-not-allowed' : 'opacity-40 hover:opacity-100 hover:bg-red-50 text-red-500'}`}
+                    title={isUsed ? 'Masih digunakan oleh produk' : 'Hapus Kategori'}
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                )}
+              </div>
+            );
+          })}
+          {value && !allCats.includes(value) && (
+            <div 
+              className="p-2 bg-teal-50 text-teal-700 text-sm font-semibold cursor-pointer border-t border-teal-100"
+              onMouseDown={() => onChange(value)}
+            >
+              + Tambah "{value}"
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
