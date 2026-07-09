@@ -27,7 +27,8 @@ import {
   QrCode,
   ShieldCheck,
   Lock,
-  Bell
+  Bell,
+  CreditCard
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
