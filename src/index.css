@@ -4,6 +4,39 @@
 @source "../index.html";
 @source "../src";
 
+/* ===== FONT KUSTOM STRUK ===== */
+@font-face {
+  font-family: 'DeathStar';
+  src: url('/fonts/DeathStar-VmWB.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Doom2016';
+  src: url('/fonts/Doom2016Text-GOlBq.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Historic';
+  src: url('/fonts/Historic-rvpBA.otf') format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Indian';
+  src: url('/fonts/IndianPersonalUse-w1OPx.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Linked';
+  src: url('/fonts/Linked-8OwPz.otf') format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Miland';
+  src: url('/fonts/Miland-2vY2W.otf') format('opentype');
+  font-display: swap;
+}
+/* ============================= */
+
 
 :root {
   /* Teal / Mint Green Aesthetic (Reference UI) */

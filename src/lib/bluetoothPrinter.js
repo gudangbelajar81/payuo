@@ -1,5 +1,67 @@
 export async function printReceiptBluetooth(receiptData) {
   try {
+
+    // ── Canvas Text → ESC/POS Rasterizer ──────────────────────────────
+    const textToBitmap = async (text, fontFamily = 'Nunito', fontSize = 40) => {
+      return new Promise((resolve) => {
+        // Tunggu font siap di browser
+        document.fonts.load(`bold ${fontSize}px '${fontFamily}'`).then(() => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          ctx.font = `bold ${fontSize}px '${fontFamily}', sans-serif`;
+          const textWidth = ctx.measureText(text).width;
+
+          // Max 384px (kertas 58mm). Jika terlalu lebar, scale turun.
+          const maxW = 384;
+          const scaledFontSize = textWidth > maxW ? Math.floor(fontSize * (maxW / textWidth)) : fontSize;
+
+          ctx.font = `bold ${scaledFontSize}px '${fontFamily}', sans-serif`;
+          const finalWidth = Math.ceil(ctx.measureText(text).width) + 8;
+          const printWidth = Math.ceil((finalWidth + 7) / 8) * 8; // Multiple of 8
+          const printHeight = scaledFontSize + 16;
+
+          canvas.width = printWidth;
+          canvas.height = printHeight;
+
+          // Background putih
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, printWidth, printHeight);
+
+          // Gambar teks hitam di tengah secara vertikal
+          ctx.fillStyle = '#000000';
+          ctx.font = `bold ${scaledFontSize}px '${fontFamily}', sans-serif`;
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, 4, printHeight / 2);
+
+          const imgData = ctx.getImageData(0, 0, printWidth, printHeight).data;
+          const widthBytes = printWidth / 8;
+          const rasterData = [];
+
+          // GS v 0 — Raster Bit Image
+          rasterData.push(0x1d, 0x76, 0x30, 0x00);
+          rasterData.push(widthBytes & 0xff);
+          rasterData.push((widthBytes >> 8) & 0xff);
+          rasterData.push(printHeight & 0xff);
+          rasterData.push((printHeight >> 8) & 0xff);
+
+          for (let y = 0; y < printHeight; y++) {
+            for (let xb = 0; xb < widthBytes; xb++) {
+              let byte = 0;
+              for (let b = 0; b < 8; b++) {
+                const x = xb * 8 + b;
+                const i = (y * printWidth + x) * 4;
+                const gray = imgData[i] * 0.3 + imgData[i+1] * 0.59 + imgData[i+2] * 0.11;
+                if (gray < 128) byte |= (1 << (7 - b));
+              }
+              rasterData.push(byte);
+            }
+          }
+          resolve(rasterData);
+        });
+      });
+    };
+    // ──────────────────────────────────────────────────────────────────
+
     // 1. Minta akses ke Bluetooth Device (akan memunculkan popup di browser Chrome)
     const device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
@@ -46,6 +108,7 @@ export async function printReceiptBluetooth(receiptData) {
     const tokoName = storeSettings?.store_name || 'TOKO PAYUO';
     const tokoPhone = storeSettings?.store_phone || '';
     const tokoAddress = storeSettings?.store_address || '';
+    const tokoFont = storeSettings?.store_font || 'Nunito';
     const adminName = 'Admin'; // Todo: Get from auth session if available
 
     let data = [
@@ -53,12 +116,10 @@ export async function printReceiptBluetooth(receiptData) {
       0x1b, 0x61, 0x01, // Center align
     ];
     
-    // 1. NAMA TOKO (Tebal & Double Size)
-    data.push(0x1b, 0x45, 0x01); // Bold ON
-    data.push(0x1d, 0x21, 0x11); // Double size
-    data.push(...encoder.encode(tokoName + '\n'));
-    data.push(0x1d, 0x21, 0x00); // Normal size
-    data.push(0x1b, 0x45, 0x00); // Bold OFF
+    // 1. NAMA TOKO — cetak sebagai Bitmap dengan font kustom
+    const nameBytes = await textToBitmap(tokoName.toUpperCase(), tokoFont, 42);
+    data.push(...nameBytes);
+    data.push(...encoder.encode('\n'));
     
     // 2. NO HP
     if (tokoPhone) {

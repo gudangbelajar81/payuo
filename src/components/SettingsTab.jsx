@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { Store, Phone, MapPin, UploadCloud, Save, CheckCircle, Image as ImageIcon, Lock, UserX, UserCheck } from 'lucide-react';
+import { Store, Phone, MapPin, UploadCloud, Save, CheckCircle, Image as ImageIcon, Lock, UserX, UserCheck, Type } from 'lucide-react';
+
+const FONT_OPTIONS = [
+  { value: 'Nunito', label: 'Nunito (Default)', preview: 'NAMA TOKO' },
+  { value: 'Historic', label: 'Historic — Blackletter Klasik', preview: 'NAMA TOKO' },
+  { value: 'Miland', label: 'Miland by brandsemut', preview: 'NAMA TOKO' },
+  { value: 'Linked', label: 'Linked by brandsemut', preview: 'NAMA TOKO' },
+  { value: 'Indian', label: 'Indian by Billy Argel Fonts', preview: 'NAMA TOKO' },
+  { value: 'DeathStar', label: 'Death Star (Sci-Fi)', preview: 'NAMA TOKO' },
+  { value: 'Doom2016', label: 'Doom 2016 (Metal)', preview: 'NAMA TOKO' },
+];
 
 export default function SettingsTab({ session, onSettingsUpdate }) {
   const [settings, setSettings] = useState({
     store_name: '',
     store_phone: '',
     store_address: '',
-    store_logo_url: ''
+    store_logo_url: '',
+    store_font: 'Nunito'
   });
   const [initialLoading, setInitialLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -129,6 +140,7 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
         store_phone: settings.store_phone,
         store_address: settings.store_address,
         store_logo_url: settings.store_logo_url,
+        store_font: settings.store_font || 'Nunito',
         updated_at: new Date()
       }).eq('id', settingsId);
       error = res.error;
@@ -139,7 +151,8 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
         store_name: settings.store_name,
         store_phone: settings.store_phone,
         store_address: settings.store_address,
-        store_logo_url: settings.store_logo_url
+        store_logo_url: settings.store_logo_url,
+        store_font: settings.store_font || 'Nunito'
       }]).select();
       error = res.error;
       if (res.data) setSettingsId(res.data[0].id);
@@ -214,6 +227,35 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
                 value={settings.store_name} 
                 onChange={e => setSettings({...settings, store_name: e.target.value})} 
               />
+            </div>
+
+            {/* Font Picker */}
+            <div className="input-group">
+              <label className="input-label flex items-center gap-2"><Type size={16}/> Gaya Font Nama Toko (Struk)</label>
+              <div className="grid grid-cols-1 gap-2 mt-1">
+                {FONT_OPTIONS.map(font => (
+                  <button
+                    key={font.value}
+                    type="button"
+                    onClick={() => setSettings({...settings, store_font: font.value})}
+                    className={`flex items-center justify-between gap-3 p-3 rounded-xl border-2 transition-all text-left ${
+                      settings.store_font === font.value
+                        ? 'border-primary bg-primary/5'
+                        : 'border-slate-100 bg-slate-50 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-xs text-slate-400 font-medium mb-1">{font.label}</span>
+                      <span style={{ fontFamily: font.value, fontSize: '22px', lineHeight: 1.2, color: '#334155' }}>
+                        {settings.store_name || 'NAMA TOKO'}
+                      </span>
+                    </div>
+                    {settings.store_font === font.value && (
+                      <CheckCircle size={20} className="text-primary shrink-0" />
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="input-group">
