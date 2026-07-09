@@ -708,16 +708,18 @@ function App() {
         )}
 
         {/* MOBILE FLOATING CART */}
-        {cart.length > 0 && activeTab === 'kasir' && !isMobileCartOpen && (
-          <div className="lg:hidden fixed left-4 right-4 bg-primary text-white p-md rounded-lg shadow-lg flex justify-between items-center cursor-pointer animate-fade-in z-40"
-               style={{ bottom: '85px' }}
+        {activeTab === 'kasir' && !isMobileCartOpen && (
+          <div className="lg:hidden fixed z-40 cursor-pointer animate-fade-in shadow-[0_10px_40px_-10px_rgba(13,148,136,0.6)]"
+               style={{ bottom: '85px', right: '16px', borderRadius: '30px', overflow: 'hidden' }}
                onClick={() => setIsMobileCartOpen(true)}>
-            <div className="flex items-center gap-sm font-semibold">
-              <ShoppingBag size={20} />
-              <span>{cart.length} Item di Keranjang</span>
-            </div>
-            <div className="font-bold text-lg">
-              Rp {totalAmount.toLocaleString('id-ID')}
+            <div className="flex items-center bg-slate-900 text-white pl-5 pr-2 py-2" style={{ gap: '12px' }}>
+              <div className="flex items-center gap-2 font-bold text-sm">
+                <ShoppingBag size={18} />
+                Keranjang
+              </div>
+              <div className="bg-primary text-white font-bold flex items-center justify-center rounded-full" style={{ width: '28px', height: '28px', fontSize: '13px' }}>
+                {cart.length}
+              </div>
             </div>
           </div>
         )}
