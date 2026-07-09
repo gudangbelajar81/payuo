@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'payuo_logo.png'],
+      includeAssets: ['favicon.ico', 'payuo_logo.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'PayuO Kasir Digital',
         short_name: 'PayuO',
@@ -18,20 +18,26 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/payuo_logo.png',
+            src: '/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/payuo_logo.png',
+            src: '/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           },
           {
-            src: '/payuo_logo.png',
+            src: '/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
+          },
+          {
+            src: '/apple-touch-icon.png',
+            sizes: '180x180',
+            type: 'image/png',
+            purpose: 'apple touch icon'
           }
         ]
       }
