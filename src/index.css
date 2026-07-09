@@ -321,8 +321,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 350px;
   background-color: var(--surface);
   border-left: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
   box-shadow: -4px 0 15px rgba(0,0,0,0.02);
   z-index: 5;
 }
