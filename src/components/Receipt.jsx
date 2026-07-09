@@ -122,7 +122,10 @@ export default function Receipt({ data }) {
           {method === 'kasbon' ? 'BELUM LUNAS' : 'LUNAS'}
         </p>
         <p style={{ margin: 0 }}>Terima Kasih Atas Kunjungan Anda</p>
-        <p style={{ margin: '4px 0 0 0', fontSize: '9px', color: '#333' }}>Powered by PayuO (Garneta Store)</p>
+        <p style={{ margin: '4px 0 0 0', fontSize: '10px', color: '#333' }}>
+          <strong>Powered by PayuO</strong><br />
+          <span style={{ fontSize: '8px' }}>GARNETA STORE</span>
+        </p>
       </div>
     </div>
   );
