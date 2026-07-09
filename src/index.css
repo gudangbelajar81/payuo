@@ -452,7 +452,8 @@ h1, h2, h3, h4, h5, h6 {
     position: fixed !important;
     left: 0 !important;
     top: 0 !important;
-    width: 58mm;
+    width: 48mm !important;
+    max-width: 48mm !important;
     margin: 0;
     padding: 0;
     font-family: 'Courier New', Courier, monospace;

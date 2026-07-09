@@ -6,9 +6,9 @@ export default function Receipt({ data }) {
 
   const styles = {
     container: {
-      width: '100%',
-      maxWidth: '58mm', // Kertas 58mm
-      padding: '2mm',
+      width: '48mm',
+      maxWidth: '48mm', // Kertas 58mm punya margin fisik, jadi area cetaknya 48mm
+      padding: '0',
       boxSizing: 'border-box',
       fontSize: '11px', // Font lebih kecil agar muat banyak teks
       lineHeight: '1.3',
