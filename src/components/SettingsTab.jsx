@@ -239,7 +239,7 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
                 className="input bg-slate-50 border-slate-200 focus:border-primary focus:ring-primary/20 transition-all font-bold text-lg" 
                 placeholder="Misal: Toko Sembako Berkah" 
                 value={settings.store_name} 
-                onChange={e => setSettings({...settings, store_name: e.target.value})} 
+                onChange={e => setSettings({...settings, store_name: e.target.value.toUpperCase()})} 
               />
             </div>
 
