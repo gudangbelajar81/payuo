@@ -4,6 +4,7 @@ import imageCompression from 'browser-image-compression';
 import Auth from './components/Auth';
 import SubscriptionBadge from './components/SubscriptionBadge';
 import PricingModal from './components/PricingModal';
+import KasbonTab from './components/KasbonTab';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -473,18 +474,7 @@ function App() {
 
         {/* BUKU KASBON */}
         {activeTab === 'kasbon' && (
-          <div className="flex-1 p-lg bg-background overflow-y-auto animate-fade-in">
-             <div className="card p-xl flex flex-col items-center justify-center text-center h-64 gap-md">
-                <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center text-primary">
-                  <Users size={32} />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold mb-sm">Buku Kasbon & Utang</h2>
-                  <p className="text-secondary max-w-md mx-auto">Fitur untuk mencatat pelanggan yang ngutang atau kasbon. Segera hadir mengadopsi fitur terbaik dari BukuWarung!</p>
-                </div>
-                <button className="btn btn-primary mt-sm">Tambah Catatan Kasbon (Segera)</button>
-             </div>
-          </div>
+          <KasbonTab session={session} />
         )}
         
         {/* KELOLA PRODUK */}
