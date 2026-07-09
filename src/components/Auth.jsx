@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { Mail, Lock, ShoppingBag, Loader2 } from 'lucide-react';
+import { Mail, Lock, ShoppingBag, Loader2, Rocket } from 'lucide-react';
 
 export default function Auth({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -55,6 +55,12 @@ export default function Auth({ onLogin }) {
     }
   };
 
+  const themeColor1 = isLogin ? '#0D9488' : '#6366F1'; // Teal vs Indigo
+  const themeColor2 = isLogin ? '#2DD4BF' : '#8B5CF6'; // Light Teal vs Purple
+  const themeColorRGBA = isLogin ? '13, 148, 136' : '99, 102, 241';
+  const shadowColor = isLogin ? 'rgba(13, 148, 136, 0.4)' : 'rgba(99, 102, 241, 0.4)';
+  const shadowHover = isLogin ? 'rgba(13, 148, 136, 0.5)' : 'rgba(99, 102, 241, 0.5)';
+
   return (
     <div style={{ 
       minHeight: '100vh', 
@@ -66,21 +72,24 @@ export default function Auth({ onLogin }) {
       padding: '2rem', 
       position: 'relative', 
       overflow: 'hidden',
-      fontFamily: "'Nunito', sans-serif"
+      fontFamily: "'Nunito', sans-serif",
+      transition: 'all 0.5s ease'
     }}>
       
       {/* 3D Glowing Orbs Background */}
       <div style={{ 
         position: 'absolute', top: '10%', left: '15%', width: '40vw', height: '40vw', 
-        background: 'radial-gradient(circle, rgba(13, 148, 136, 0.15) 0%, rgba(0,0,0,0) 70%)', 
+        background: `radial-gradient(circle, rgba(${themeColorRGBA}, 0.15) 0%, rgba(0,0,0,0) 70%)`, 
         borderRadius: '50%', filter: 'blur(60px)', zIndex: 0,
-        animation: 'float 10s infinite ease-in-out'
+        animation: 'float 10s infinite ease-in-out',
+        transition: 'background 0.5s ease'
       }}></div>
       <div style={{ 
         position: 'absolute', bottom: '5%', right: '10%', width: '35vw', height: '35vw', 
-        background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(0,0,0,0) 70%)', 
+        background: isLogin ? 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(0,0,0,0) 70%)' : 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(0,0,0,0) 70%)', 
         borderRadius: '50%', filter: 'blur(60px)', zIndex: 0,
-        animation: 'float 12s infinite ease-in-out reverse'
+        animation: 'float 12s infinite ease-in-out reverse',
+        transition: 'background 0.5s ease'
       }}></div>
 
       {/* Glassmorphism Card */}
@@ -102,14 +111,18 @@ export default function Auth({ onLogin }) {
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
           <div style={{ 
             width: '80px', height: '80px', 
-            background: 'linear-gradient(135deg, #0D9488, #2DD4BF)', 
+            background: `linear-gradient(135deg, ${themeColor1}, ${themeColor2})`, 
             borderRadius: '24px', 
             display: 'flex', alignItems: 'center', justifyContent: 'center', 
             color: 'white', 
-            boxShadow: '0 10px 25px -5px rgba(13, 148, 136, 0.5), inset 0 2px 4px rgba(255,255,255,0.3)',
-            transform: 'rotate(-5deg)'
+            boxShadow: `0 10px 25px -5px ${shadowColor}, inset 0 2px 4px rgba(255,255,255,0.3)`,
+            transform: 'rotate(-5deg)',
+            transition: 'all 0.5s ease'
           }}>
-            <ShoppingBag size={40} strokeWidth={1.5} style={{ transform: 'rotate(5deg)' }} />
+            {isLogin 
+              ? <ShoppingBag size={40} strokeWidth={1.5} style={{ transform: 'rotate(5deg)' }} />
+              : <Rocket size={40} strokeWidth={1.5} style={{ transform: 'rotate(5deg)' }} />
+            }
           </div>
         </div>
         
@@ -141,7 +154,7 @@ export default function Auth({ onLogin }) {
                 placeholder="nama@toko.com" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onFocus={(e) => { e.target.style.background = 'rgba(255, 255, 255, 0.1)'; e.target.style.borderColor = '#0D9488'; e.target.style.boxShadow = '0 0 0 4px rgba(13, 148, 136, 0.1)'; }}
+                onFocus={(e) => { e.target.style.background = 'rgba(255, 255, 255, 0.1)'; e.target.style.borderColor = themeColor1; e.target.style.boxShadow = `0 0 0 4px rgba(${themeColorRGBA}, 0.1)`; }}
                 onBlur={(e) => { e.target.style.background = 'rgba(255, 255, 255, 0.05)'; e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'; e.target.style.boxShadow = 'none'; }}
                 required
               />
@@ -168,7 +181,7 @@ export default function Auth({ onLogin }) {
                 placeholder="••••••••" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                onFocus={(e) => { e.target.style.background = 'rgba(255, 255, 255, 0.1)'; e.target.style.borderColor = '#0D9488'; e.target.style.boxShadow = '0 0 0 4px rgba(13, 148, 136, 0.1)'; }}
+                onFocus={(e) => { e.target.style.background = 'rgba(255, 255, 255, 0.1)'; e.target.style.borderColor = themeColor1; e.target.style.boxShadow = `0 0 0 4px rgba(${themeColorRGBA}, 0.1)`; }}
                 onBlur={(e) => { e.target.style.background = 'rgba(255, 255, 255, 0.05)'; e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'; e.target.style.boxShadow = 'none'; }}
                 required
               />
@@ -180,15 +193,15 @@ export default function Auth({ onLogin }) {
             disabled={loading}
             style={{ 
               width: '100%', marginTop: '1rem', padding: '1rem', 
-              background: 'linear-gradient(135deg, #0D9488, #2DD4BF)',
+              background: `linear-gradient(135deg, ${themeColor1}, ${themeColor2})`,
               color: 'white', fontSize: '1.125rem', fontWeight: '700',
               border: 'none', borderRadius: '16px', cursor: 'pointer',
               display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem',
-              boxShadow: '0 10px 25px -5px rgba(13, 148, 136, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)',
-              transition: 'all 0.2s'
+              boxShadow: `0 10px 25px -5px ${shadowColor}, inset 0 2px 4px rgba(255,255,255,0.2)`,
+              transition: 'all 0.5s ease'
             }}
-            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 15px 30px -5px rgba(13, 148, 136, 0.5), inset 0 2px 4px rgba(255,255,255,0.2)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(13, 148, 136, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)'; }}
+            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 15px 30px -5px ${shadowHover}, inset 0 2px 4px rgba(255,255,255,0.2)`; }}
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 10px 25px -5px ${shadowColor}, inset 0 2px 4px rgba(255,255,255,0.2)`; }}
           >
             {loading ? <Loader2 className="animate-spin" size={24} /> : (isLogin ? 'Masuk Sekarang' : 'Daftar & Mulai Jualan')}
           </button>
@@ -230,11 +243,11 @@ export default function Auth({ onLogin }) {
               background: 'none', border: 'none', cursor: 'pointer',
               transition: 'color 0.2s'
             }}
-            onMouseOver={(e) => e.target.style.color = '#2DD4BF'}
+            onMouseOver={(e) => e.target.style.color = themeColor2}
             onMouseOut={(e) => e.target.style.color = '#94A3B8'}
           >
             {isLogin ? 'Belum punya akun? ' : 'Sudah punya akun? '}
-            <span style={{ color: '#2DD4BF' }}>{isLogin ? 'Daftar disini' : 'Masuk disini'}</span>
+            <span style={{ color: themeColor2, transition: 'color 0.5s ease' }}>{isLogin ? 'Daftar disini' : 'Masuk disini'}</span>
           </button>
         </div>
       </div>
