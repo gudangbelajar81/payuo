@@ -278,7 +278,7 @@ function App() {
               onClick={() => setActiveTab('kasir')}
               title="Kasir Utama"
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'kasir' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)]'}`} style={{ border: activeTab === 'kasir' ? '1px solid rgba(255,255,255,0.4)' : '1px solid #f1f5f9' }}>
                 <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">🛒</span>
               </div>
               <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'kasir' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Kasir</span>
@@ -291,7 +291,7 @@ function App() {
               onClick={() => setActiveTab('kasbon')}
               title="Buku Kasbon"
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 ${activeTab === 'kasbon' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)]'}`} style={{ border: activeTab === 'kasbon' ? '1px solid rgba(255,255,255,0.4)' : '1px solid #f1f5f9' }}>
                 <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">💸</span>
               </div>
               <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'kasbon' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Kasbon</span>
@@ -304,7 +304,7 @@ function App() {
               onClick={() => setActiveTab('produk')}
               title="Kelola Produk"
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float border-t border-white/40' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-12 ${activeTab === 'produk' ? 'bg-gradient-to-br from-primary to-[#2DD4BF] text-white shadow-[0_10px_25px_rgba(13,148,136,0.6)] animate-float' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)]'}`} style={{ border: activeTab === 'produk' ? '1px solid rgba(255,255,255,0.4)' : '1px solid #f1f5f9' }}>
                 <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">📦</span>
               </div>
               <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'produk' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Produk</span>
@@ -316,7 +316,7 @@ function App() {
               className="flex flex-col items-center justify-center gap-2 w-full"
               title="Laporan"
             >
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)]`} style={{ border: '1px solid #f1f5f9' }}>
                 <span className="text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform">📈</span>
               </div>
               <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-slate-400 group-hover:text-primary transition-colors">Laporan</span>
@@ -658,35 +658,36 @@ function CategorySelect({ value, onChange, defaultCategories, customCategories, 
   const allCats = [...defaultCategories, ...customCategories];
 
   return (
-    <div className="relative">
-      <div className="flex items-center relative">
+    <div style={{ position: 'relative' }}>
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
         <input 
           type="text" 
-          className="input bg-white w-full pr-10" 
-          placeholder="Ketik kategori baru..."
+          className="input bg-white w-full" 
+          style={{ paddingRight: '36px' }}
+          autoComplete="off"
           value={value}
           onChange={(e) => onChange(toTitleCase(e.target.value))}
           onFocus={() => setIsOpen(true)}
           onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         />
-        <div className="absolute right-3 text-slate-400 pointer-events-none">
+        <div style={{ position: 'absolute', right: '12px', color: '#94a3b8', pointerEvents: 'none' }}>
           <ChevronDown size={16} />
         </div>
       </div>
       
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50 max-h-48 overflow-y-auto">
-          {allCats.length === 0 ? <div className="p-2 text-sm text-slate-400">Ketik untuk tambah</div> : null}
+        <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '4px', backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', zIndex: 50, maxHeight: '200px', overflowY: 'auto' }}>
+          {allCats.length === 0 ? <div style={{ padding: '8px', fontSize: '14px', color: '#94a3b8' }}>Ketik untuk tambah</div> : null}
           {allCats.map((cat, idx) => {
             const isDefault = defaultCategories.includes(cat);
             const isUsed = usedCategories.has(cat);
             return (
               <div 
                 key={idx}
-                className="flex items-center justify-between p-2 hover:bg-slate-50 cursor-pointer transition-colors"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', cursor: 'pointer', borderBottom: '1px solid #f8fafc' }}
                 onMouseDown={() => onChange(cat)}
               >
-                <span className="text-sm text-slate-700">{cat}</span>
+                <span style={{ fontSize: '14px', color: '#334155' }}>{cat}</span>
                 {!isDefault && (
                   <button 
                     type="button"
@@ -695,7 +696,7 @@ function CategorySelect({ value, onChange, defaultCategories, customCategories, 
                       e.preventDefault();
                       if (!isUsed) onDelete(cat);
                     }}
-                    className={`p-1 rounded transition-all ${isUsed ? 'opacity-20 cursor-not-allowed' : 'opacity-40 hover:opacity-100 hover:bg-red-50 text-red-500'}`}
+                    style={{ padding: '4px', borderRadius: '4px', color: '#ef4444', opacity: isUsed ? 0.2 : 0.5, cursor: isUsed ? 'not-allowed' : 'pointer', background: 'transparent' }}
                     title={isUsed ? 'Masih digunakan oleh produk' : 'Hapus Kategori'}
                   >
                     <Trash2 size={13} />
@@ -706,7 +707,7 @@ function CategorySelect({ value, onChange, defaultCategories, customCategories, 
           })}
           {value && !allCats.includes(value) && (
             <div 
-              className="p-2 bg-teal-50 text-teal-700 text-sm font-semibold cursor-pointer border-t border-teal-100"
+              style={{ padding: '8px 12px', backgroundColor: '#f0fdfa', color: '#0f766e', fontSize: '14px', fontWeight: 600, cursor: 'pointer', borderTop: '1px solid #ccfbf1' }}
               onMouseDown={() => onChange(value)}
             >
               + Tambah "{value}"
