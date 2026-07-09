@@ -3,7 +3,7 @@ import { X, CreditCard, BookOpen, CheckCircle, Search, User } from 'lucide-react
 import { supabase } from '../lib/supabaseClient';
 import Receipt from './Receipt';
 
-export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onClearCart }) {
+export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onClearCart, storeSettings }) {
   const [method, setMethod] = useState(''); // 'tunai' | 'kasbon'
   const [customers, setCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,7 +48,8 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onCl
       totalAmount,
       method,
       customerName: method === 'kasbon' ? selectedCustomer?.name : '',
-      date: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })
+      date: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }),
+      storeSettings
     };
     
     setReceiptData(currentData);

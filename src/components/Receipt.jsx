@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Receipt({ data }) {
   if (!data) return null;
-  const { cart, totalAmount, method, customerName, date } = data;
+  const { cart, totalAmount, method, customerName, date, storeSettings } = data;
 
   const styles = {
     container: {
@@ -58,7 +58,12 @@ export default function Receipt({ data }) {
   return (
     <div id="printable-receipt" style={styles.container}>
       <div style={styles.header}>
-        <h2 style={styles.title}>TOKO PAYUO</h2>
+        {storeSettings?.store_logo_url && (
+          <img src={storeSettings.store_logo_url} alt="Logo" style={{ width: '40px', height: '40px', objectFit: 'contain', margin: '0 auto 4px auto', display: 'block', borderRadius: '50%' }} />
+        )}
+        <h2 style={styles.title}>{storeSettings?.store_name || 'TOKO PAYUO'}</h2>
+        {storeSettings?.store_address && <p style={{ fontSize: '10px', margin: '0 0 2px 0' }}>{storeSettings.store_address}</p>}
+        {storeSettings?.store_phone && <p style={{ fontSize: '10px', margin: '0 0 4px 0' }}>{storeSettings.store_phone}</p>}
         <p style={styles.subtitle}>{date}</p>
       </div>
 
@@ -93,7 +98,7 @@ export default function Receipt({ data }) {
           {method === 'kasbon' ? 'BELUM LUNAS' : 'LUNAS'}
         </p>
         <p style={{ margin: 0 }}>Terima Kasih Atas Kunjungan Anda</p>
-        <p style={{ margin: '4px 0 0 0', fontSize: '8px', color: '#333' }}>Powered by PayuO POS</p>
+        <p style={{ margin: '4px 0 0 0', fontSize: '9px', color: '#333' }}>Powered by PayuO (Garneta Store)</p>
       </div>
     </div>
   );

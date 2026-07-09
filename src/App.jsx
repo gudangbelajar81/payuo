@@ -6,6 +6,7 @@ import SubscriptionBadge from './components/SubscriptionBadge';
 import PricingModal from './components/PricingModal';
 import KasbonTab from './components/KasbonTab';
 import CheckoutModal from './components/CheckoutModal';
+import SettingsTab from './components/SettingsTab';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -51,11 +52,20 @@ function App() {
   const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
+  const [storeSettings, setStoreSettings] = useState(null);
 
   // Fetch Products on Session Load
   useEffect(() => {
-    if (session) fetchProducts();
+    if (session) {
+      fetchProducts();
+      fetchStoreSettings();
+    }
   }, [session]);
+
+  const fetchStoreSettings = async () => {
+    const { data } = await supabase.from('store_settings').select('*').eq('user_id', session.user.id).single();
+    if (data) setStoreSettings(data);
+  };
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -269,8 +279,8 @@ function App() {
       {/* SIDEBAR (Desktop Minimalist Lux) */}
       <aside className="sidebar hidden md:flex shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
         <div className="mb-xl flex flex-col items-center justify-center">
-          <div className="w-14 h-14 flex-shrink-0 animate-fade-in flex items-center justify-center mb-2">
-            <img src="/payuo_logo.png" alt="PayuO Logo" className="w-full h-full object-contain drop-shadow-md rounded-full border-2 border-surface-hover" />
+          <div className="w-14 h-14 flex-shrink-0 animate-fade-in flex items-center justify-center mb-2 bg-white rounded-full p-1 shadow-sm">
+            <img src={storeSettings?.store_logo_url || "/payuo_logo.png"} alt="Store Logo" className="w-full h-full object-contain drop-shadow-md rounded-full" />
           </div>
         </div>
         
@@ -326,7 +336,20 @@ function App() {
             </button>
           </div>
 
-          <div className="relative group w-full flex justify-center mt-auto mb-lg">
+          <div className="relative group w-full flex justify-center mt-auto">
+            <button 
+              className={`flex flex-col items-center justify-center gap-2 w-full ${activeTab === 'pengaturan' ? 'text-primary' : 'text-slate-400 hover:text-white'}`}
+              onClick={() => setActiveTab('pengaturan')}
+              title="Pengaturan Toko"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 ${activeTab === 'pengaturan' ? 'bg-primary text-white shadow-[0_8px_15px_rgba(13,148,136,0.3)]' : 'bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)]'}`} style={{ border: activeTab === 'pengaturan' ? 'none' : '1px solid #f1f5f9' }}>
+                <span className={`text-2xl filter drop-shadow-sm transition-transform ${activeTab === 'pengaturan' ? 'scale-110' : 'group-hover:scale-110'}`}>⚙️</span>
+              </div>
+              <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors ${activeTab === 'pengaturan' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>Setting</span>
+            </button>
+          </div>
+
+          <div className="relative group w-full flex justify-center mb-lg">
             <button 
               className="flex flex-col items-center justify-center gap-2 w-full"
               title="Keluar"
@@ -350,8 +373,9 @@ function App() {
               <Menu size={24} />
             </button>
             <h2 className="text-xl font-semibold">
-              {activeTab === 'kasir' ? 'Kasir Utama' 
+              {activeTab === 'kasir' ? (storeSettings?.store_name || 'Kasir Utama')
                 : activeTab === 'kasbon' ? 'Buku Kasbon' 
+                : activeTab === 'pengaturan' ? 'Pengaturan Toko'
                 : 'Kelola Produk'}
             </h2>
           </div>
@@ -639,7 +663,17 @@ function App() {
              <span style={{ fontSize: '11px' }} className="font-semibold">Produk</span>
            </button>
         </nav>
+        {/* PENGATURAN TOKO */}
+        {activeTab === 'pengaturan' && (
+          <SettingsTab session={session} onSettingsUpdate={setStoreSettings} />
+        )}
+
       </main>
+
+      {/* Watermark Logo PayuO (Branding) */}
+      <div className="fixed bottom-4 right-4 pointer-events-none opacity-[0.03] z-0">
+        <img src="/payuo_logo.png" alt="PayuO Watermark" className="w-64 h-64 grayscale" />
+      </div>
       
       {/* Modals */}
       {isPricingModalOpen && (
@@ -651,6 +685,7 @@ function App() {
         totalAmount={totalAmount}
         cart={cart}
         onClearCart={clearCart}
+        storeSettings={storeSettings}
       />
     </div>
   );
