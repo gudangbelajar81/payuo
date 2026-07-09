@@ -49,9 +49,11 @@ export async function printReceiptBluetooth(receiptData) {
     let data = [
       0x1b, 0x40, // init
       0x1b, 0x61, 0x01, // Center align
+      0x1b, 0x45, 0x01, // Bold ON
       0x1d, 0x21, 0x11, // Double size
       ...encoder.encode(tokoName + '\n'),
       0x1d, 0x21, 0x00, // Normal size
+      0x1b, 0x45, 0x00, // Bold OFF
     ];
     
     if (tokoPhone) {
