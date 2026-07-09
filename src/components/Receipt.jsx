@@ -83,16 +83,19 @@ export default function Receipt({ data }) {
 
       <div style={styles.header}>
         {storeSettings?.store_logo_url && (
-          <img src={storeSettings.store_logo_url} alt="Logo" style={{ width: '40px', height: '40px', objectFit: 'contain', margin: '0 auto 4px auto', display: 'block', borderRadius: '50%' }} />
+          <img src={storeSettings.store_logo_url} alt="Logo" style={{ width: '40px', height: '40px', objectFit: 'contain', margin: '0 auto 4px auto', display: 'block' }} />
         )}
         <h2 style={styles.title}>{storeSettings?.store_name || 'TOKO PAYUO'}</h2>
-        {storeSettings?.store_address && <p style={{ fontSize: '10px', margin: '0 0 2px 0' }}>{storeSettings.store_address}</p>}
-        {storeSettings?.store_phone && <p style={{ fontSize: '10px', margin: '0 0 4px 0' }}>{storeSettings.store_phone}</p>}
-        <p style={styles.subtitle}>{date}</p>
+        {storeSettings?.store_phone && <p style={{ fontSize: '10px', margin: '0 0 2px 0' }}>{storeSettings.store_phone}</p>}
+        {storeSettings?.store_address && <p style={{ fontSize: '10px', margin: '0 0 4px 0' }}>{storeSettings.store_address}</p>}
       </div>
 
       <div>
-        <p style={{ margin: 0, fontSize: '10px' }}>Metode: {method === 'kasbon' ? 'KASBON' : 'TUNAI'}</p>
+        <p style={{ margin: 0, fontSize: '10px' }}>Tgl: {date}</p>
+        <div style={styles.row}>
+          <span style={{ fontSize: '10px' }}>Tipe: {method === 'kasbon' ? 'KASBON' : 'TUNAI'}</span>
+          <span style={{ fontSize: '10px' }}>Kasir: Admin</span>
+        </div>
         {method === 'kasbon' && (
           <p style={{ margin: 0, fontSize: '10px', fontWeight: 'bold' }}>Pelanggan: {customerName}</p>
         )}
