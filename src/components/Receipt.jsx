@@ -13,7 +13,23 @@ export default function Receipt({ data }) {
       color: '#000',
       background: '#fff',
       margin: '0 auto',
-      textAlign: 'left'
+      textAlign: 'left',
+      position: 'relative',
+      zIndex: 1
+    },
+    watermarkContainer: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: -1,
+      opacity: 0.15, /* Transparansi untuk printer thermal */
+      filter: 'grayscale(100%)' /* Wajib abu-abu/hitam putih untuk thermal */
     },
     header: {
       textAlign: 'center',
@@ -57,6 +73,11 @@ export default function Receipt({ data }) {
 
   return (
     <div id="printable-receipt" style={styles.container}>
+      {/* Watermark Struk */}
+      <div style={styles.watermarkContainer}>
+        <img src="/payuo_logo.png" alt="Watermark" style={{ width: '40mm', height: 'auto', objectFit: 'contain' }} />
+      </div>
+
       <div style={styles.header}>
         {storeSettings?.store_logo_url && (
           <img src={storeSettings.store_logo_url} alt="Logo" style={{ width: '40px', height: '40px', objectFit: 'contain', margin: '0 auto 4px auto', display: 'block', borderRadius: '50%' }} />
