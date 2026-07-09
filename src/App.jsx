@@ -509,7 +509,7 @@ function App() {
             </div>
 
             {/* CART SIDEBAR (Desktop / Mobile Modal) */}
-            <div className={`cart-area flex flex-col bg-surface transition-fast ${isMobileCartOpen ? 'fixed inset-0 z-50 w-full h-full' : 'hidden lg:flex'}`}>
+            <div className={`cart-area bg-surface transition-fast flex-col ${isMobileCartOpen ? 'fixed inset-0 z-50 w-full h-full flex' : 'hidden lg:flex'}`}>
               <div className="p-md border-b flex justify-between items-center bg-white shadow-sm">
                 <h3 className="font-bold text-lg flex items-center gap-sm">
                   <ShoppingBag size={20} className="text-primary" /> Pesanan Saat Ini
