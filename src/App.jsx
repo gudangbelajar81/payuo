@@ -29,6 +29,16 @@ import {
 // DUMMY DATA FOR MVP
 const DUMMY_PRODUCTS = [];
 
+// Helper untuk format teks menjadi Title Case (misal: "gula pasir" -> "Gula Pasir")
+const toTitleCase = (str) => {
+  if (!str) return '';
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 function App() {
   const [session, setSession] = useState(null);
   const [activeTab, setActiveTab] = useState('kasir');
@@ -564,7 +574,7 @@ function App() {
                 <div className="input-group">
                   <label className="input-label">Nama Produk (Opsional)</label>
                   <input type="text" className="input" placeholder="Misal: Kopi Susu Aren" 
-                    value={newProduct.name} onChange={e => setNewProduct({...newProduct, name: e.target.value})} />
+                    value={newProduct.name} onChange={e => setNewProduct({...newProduct, name: toTitleCase(e.target.value)})} />
                 </div>
 
                 <div className="grid grid-cols-2 gap-sm">
@@ -655,7 +665,7 @@ function CategorySelect({ value, onChange, defaultCategories, customCategories, 
           className="input bg-white w-full pr-10" 
           placeholder="Ketik kategori baru..."
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange(toTitleCase(e.target.value))}
           onFocus={() => setIsOpen(true)}
           onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         />
