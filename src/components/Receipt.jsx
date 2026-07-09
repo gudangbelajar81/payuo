@@ -6,16 +6,19 @@ export default function Receipt({ data }) {
 
   const styles = {
     container: {
-      width: '58mm',
-      padding: '2mm', // Sedikit ruang agar tidak kena pinggir kertas
-      fontSize: '12px',
-      lineHeight: '1.2',
+      width: '100%',
+      maxWidth: '58mm', // Kertas 58mm
+      padding: '2mm',
+      boxSizing: 'border-box',
+      fontSize: '11px', // Font lebih kecil agar muat banyak teks
+      lineHeight: '1.3',
       color: '#000',
       background: '#fff',
-      margin: '0 auto',
+      margin: '0',
       textAlign: 'left',
       position: 'relative',
-      zIndex: 1
+      zIndex: 1,
+      fontFamily: 'monospace' // Wajib monospace untuk struk
     },
     watermarkContainer: {
       position: 'absolute',
@@ -38,7 +41,7 @@ export default function Receipt({ data }) {
       paddingBottom: '8px'
     },
     title: {
-      fontSize: '16px',
+      fontSize: '14px',
       fontWeight: 'bold',
       margin: '0 0 4px 0'
     },
