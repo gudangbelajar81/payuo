@@ -7,6 +7,7 @@ import PricingModal from './components/PricingModal';
 import KasbonTab from './components/KasbonTab';
 import CheckoutModal from './components/CheckoutModal';
 import SettingsTab from './components/SettingsTab';
+import QRCodeModal from './components/QRCodeModal';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -26,7 +27,8 @@ import {
   Image as ImageIcon,
   ChevronRight,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  QrCode
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
@@ -52,6 +54,7 @@ function App() {
   const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [storeSettings, setStoreSettings] = useState(null);
 
   // Fetch Products on Session Load
@@ -336,7 +339,20 @@ function App() {
             </button>
           </div>
 
-          <div className="relative group w-full flex justify-center mt-auto">
+          <div className="relative group w-full flex justify-center mt-auto mb-2">
+            <button 
+              className={`flex flex-col items-center justify-center gap-2 w-full text-slate-400 hover:text-white`}
+              onClick={() => setIsQrModalOpen(true)}
+              title="Akses Karyawan / Jual"
+            >
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:-translate-y-2 group-hover:-rotate-12 bg-slate-50 text-slate-400 shadow-inner group-hover:shadow-[0_8px_15px_rgba(0,0,0,0.05)] border border-slate-100`}>
+                <span className={`text-2xl filter drop-shadow-sm transition-transform group-hover:scale-110`}><QrCode size={24} /></span>
+              </div>
+              <span style={{ fontSize: '11px' }} className={`font-bold tracking-wide transition-colors text-slate-400 group-hover:text-primary`}>QR Akses</span>
+            </button>
+          </div>
+
+          <div className="relative group w-full flex justify-center mb-2">
             <button 
               className={`flex flex-col items-center justify-center gap-2 w-full ${activeTab === 'pengaturan' ? 'text-primary' : 'text-slate-400 hover:text-white'}`}
               onClick={() => setActiveTab('pengaturan')}
@@ -679,6 +695,10 @@ function App() {
       {isPricingModalOpen && (
         <PricingModal onClose={() => setIsPricingModalOpen(false)} />
       )}
+      <QRCodeModal 
+        isOpen={isQrModalOpen} 
+        onClose={() => setIsQrModalOpen(false)} 
+      />
       <CheckoutModal 
         isOpen={isCheckoutModalOpen} 
         onClose={() => setIsCheckoutModalOpen(false)} 
