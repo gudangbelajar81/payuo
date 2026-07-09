@@ -8,6 +8,7 @@ import KasbonTab from './components/KasbonTab';
 import CheckoutModal from './components/CheckoutModal';
 import SettingsTab from './components/SettingsTab';
 import QRCodeModal from './components/QRCodeModal';
+import LimitExceededModal from './components/LimitExceededModal';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -55,6 +56,8 @@ function App() {
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
+  const [isLimitModalOpen, setIsLimitModalOpen] = useState(false);
+  const [limitType, setLimitType] = useState('total'); // 'total' | 'photo'
   const [storeSettings, setStoreSettings] = useState(null);
 
   // Fetch Products on Session Load
@@ -147,6 +150,23 @@ function App() {
 
   const handleSaveProduct = async (e) => {
     e.preventDefault();
+    
+    // Validasi Limit Kuota (Anggap semua user saat ini belum langganan)
+    const totalProducts = products.length;
+    const photoProducts = products.filter(p => p.image_url).length;
+    
+    if (totalProducts >= 100) {
+      setLimitType('total');
+      setIsLimitModalOpen(true);
+      return;
+    }
+    
+    if (newProduct.file && photoProducts >= 20) {
+      setLimitType('photo');
+      setIsLimitModalOpen(true);
+      return;
+    }
+    
     setIsSaving(true);
     let imageUrl = null;
 
@@ -706,6 +726,12 @@ function App() {
         cart={cart}
         onClearCart={clearCart}
         storeSettings={storeSettings}
+      />
+      <LimitExceededModal
+        isOpen={isLimitModalOpen}
+        onClose={() => setIsLimitModalOpen(false)}
+        limitType={limitType}
+        onUpgrade={() => setIsPricingModalOpen(true)}
       />
     </div>
   );
