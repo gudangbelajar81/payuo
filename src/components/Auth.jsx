@@ -28,8 +28,13 @@ export default function Auth({ onLogin }) {
           password,
         });
         if (error) throw error;
-        alert("Pendaftaran berhasil! Silakan cek email Anda atau langsung login.");
-        setIsLogin(true);
+        
+        if (data.session) {
+          onLogin(data.session);
+        } else {
+          alert("Pendaftaran berhasil! Jika Anda tidak bisa langsung login, mohon cek Kotak Masuk / Spam Email Anda untuk verifikasi.");
+          setIsLogin(true);
+        }
       }
     } catch (error) {
       alert(error.message);
