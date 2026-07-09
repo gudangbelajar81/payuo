@@ -422,3 +422,47 @@ h1, h2, h3, h4, h5, h6 {
   .lg\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
 }
 
+/* ========================================================= */
+/* CSS KHUSUS UNTUK CETAK PRINTER THERMAL KASIR (58MM)       */
+/* ========================================================= */
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+  }
+  .hide-on-print {
+    display: none !important;
+  }
+  
+  /* Sembunyikan semua elemen di layar utama saat print */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Tampilkan hanya kontainer struk beserta isinya */
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  
+  /* Posisikan struk persis di pojok kiri atas halaman kertas cetak */
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58mm;
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+    color: #000;
+  }
+
+  @page {
+    margin: 0;
+    size: 58mm auto;
+  }
+}

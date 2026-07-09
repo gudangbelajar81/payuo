@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, CreditCard, BookOpen, CheckCircle, Search, User } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import Receipt from './Receipt';
 
 export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onClearCart }) {
   const [method, setMethod] = useState(''); // 'tunai' | 'kasbon'
@@ -9,6 +10,7 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onCl
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [receiptData, setReceiptData] = useState(null);
 
   useEffect(() => {
     if (isOpen && method === 'kasbon' && customers.length === 0) {
@@ -41,17 +43,33 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onCl
         return;
       }
     }
+    const currentData = {
+      cart: [...cart],
+      totalAmount,
+      method,
+      customerName: method === 'kasbon' ? selectedCustomer?.name : '',
+      date: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })
+    };
     
+    setReceiptData(currentData);
     setIsSuccess(true);
     setIsProcessing(false);
     onClearCart();
     
-    setTimeout(() => {
-      setIsSuccess(false);
-      onClose();
-      setMethod('');
-      setSelectedCustomer(null);
-    }, 2500);
+    // Hilangkan auto-close agar kasir punya waktu untuk ngeprint
+    // setTimeout(() => { ... }, 2500) dihapus
+  };
+
+  const handleCloseSuccess = () => {
+    setIsSuccess(false);
+    onClose();
+    setMethod('');
+    setSelectedCustomer(null);
+    setReceiptData(null);
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   if (!isOpen) return null;
@@ -73,17 +91,38 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onCl
 
   if (isSuccess) {
     return (
-      <div style={overlayStyle} className="animate-fade-in">
-        <div style={successModalStyle} className="animate-slide-up">
-          <div style={{ width: '80px', height: '80px', backgroundColor: '#dcfce7', color: '#22c55e', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
-            <CheckCircle size={40} />
-          </div>
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#334155', marginBottom: '8px' }}>Transaksi Sukses!</h2>
-          <p style={{ color: '#94a3b8' }}>
-            {method === 'kasbon' ? `Tercatat sebagai Kasbon untuk ${selectedCustomer?.name}` : 'Pembayaran tunai diterima.'}
-          </p>
+      <>
+        {/* Kontainer struk tersembunyi (hanya terlihat saat diprint) */}
+        <div className="print-only">
+          <Receipt data={receiptData} />
+        </div>
+
+        <div style={overlayStyle} className="animate-fade-in hide-on-print">
+          <div style={successModalStyle} className="animate-slide-up">
+            <div style={{ width: '80px', height: '80px', backgroundColor: '#dcfce7', color: '#22c55e', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+              <CheckCircle size={40} />
+            </div>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#334155', marginBottom: '8px' }}>Transaksi Sukses!</h2>
+            <p style={{ color: '#94a3b8', marginBottom: '24px' }}>
+              {method === 'kasbon' ? `Tercatat sebagai Kasbon untuk ${selectedCustomer?.name}` : 'Pembayaran tunai diterima.'}
+            </p>
+          
+          <button 
+            onClick={handlePrint}
+            style={{ width: '100%', padding: '12px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', marginBottom: '8px', display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center' }}
+          >
+            🖨️ Cetak Struk (58mm)
+          </button>
+          
+          <button 
+            onClick={handleCloseSuccess}
+            style={{ width: '100%', padding: '12px', backgroundColor: '#f1f5f9', color: '#475569', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+          >
+            Selesai
+          </button>
         </div>
       </div>
+      </>
     );
   }
 
