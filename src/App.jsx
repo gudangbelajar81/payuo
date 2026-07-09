@@ -13,25 +13,20 @@ import SuperadminDashboard from './components/SuperadminDashboard';
 import { 
   ShoppingBag, 
   ShoppingCart,
-  LayoutDashboard, 
-  Users, 
-  Settings, 
-  CreditCard,
-  Search,
-  Menu,
-  Bell,
-  Trash2,
   Plus,
-  Minus,
-  Package,
-  Edit2,
+  Trash2,
+  Menu,
   X,
+  Search,
+  Package,
+  Users,
   Image as ImageIcon,
   ChevronRight,
   LogOut,
   ChevronDown,
   QrCode,
-  ShieldCheck
+  ShieldCheck,
+  Lock
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
@@ -48,6 +43,7 @@ const toTitleCase = (str) => {
 };
 
 function App() {
+  const isCashierMode = localStorage.getItem('payuo_cashier_mode') === 'true';
   const [session, setSession] = useState(null);
   const [activeTab, setActiveTab] = useState('kasir');
   const [cart, setCart] = useState([]);
@@ -323,7 +319,9 @@ function App() {
             </button>
           </div>
           
-          <div className="relative group w-full flex justify-center">
+          {!isCashierMode && (
+            <>
+              <div className="relative group w-full flex justify-center">
             <button 
               className="flex flex-col items-center justify-center gap-2 w-full"
               onClick={() => setActiveTab('kasbon')}
@@ -398,6 +396,7 @@ function App() {
               </div>
               <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-red-400 group-hover:text-red-500 transition-colors">Logout</span>
             </button>
+          </div>
 
           {session?.user?.email === 'alvezadigital81@gmail.com' && (
             <button 
@@ -408,8 +407,8 @@ function App() {
               <span className="text-[10px] font-bold mt-1">Admin</span>
             </button>
           )}
-
-        </div>
+            </>
+          )}
       </nav>
       </aside>
 
@@ -421,12 +420,30 @@ function App() {
             <button className="btn-icon lg:hidden">
               <Menu size={24} />
             </button>
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold flex items-center gap-2">
               {activeTab === 'kasir' ? (storeSettings?.store_name || 'Kasir Utama')
                 : activeTab === 'kasbon' ? 'Buku Kasbon' 
                 : activeTab === 'pengaturan' ? 'Pengaturan Toko'
                 : activeTab === 'superadmin' ? 'Ruang Kendali Pusat'
                 : 'Kelola Produk'}
+              {isCashierMode && (
+                <button 
+                  onClick={() => {
+                    const pin = localStorage.getItem('payuo_cashier_pin');
+                    const input = prompt("Masukkan PIN 4 Digit untuk mematikan Mode Karyawan:");
+                    if (input === pin) {
+                      localStorage.removeItem('payuo_cashier_mode');
+                      alert("Kunci dibuka! Anda kembali memiliki akses penuh.");
+                      window.location.reload();
+                    } else if (input !== null) {
+                      alert("PIN Salah!");
+                    }
+                  }}
+                  className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 hover:bg-indigo-200 transition-colors ml-2"
+                >
+                  <Lock size={14} /> Terkunci
+                </button>
+              )}
             </h2>
           </div>
           
@@ -704,14 +721,18 @@ function App() {
              <ShoppingBag size={22} />
              <span style={{ fontSize: '11px' }} className="font-semibold">Kasir</span>
            </button>
-           <button onClick={() => setActiveTab('kasbon')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='kasbon' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
-             <Users size={22} />
-             <span style={{ fontSize: '11px' }} className="font-semibold">Kasbon</span>
-           </button>
-           <button onClick={() => setActiveTab('produk')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='produk' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
-             <Package size={22} />
-             <span style={{ fontSize: '11px' }} className="font-semibold">Produk</span>
-           </button>
+           {!isCashierMode && (
+             <>
+               <button onClick={() => setActiveTab('kasbon')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='kasbon' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
+                 <Users size={22} />
+                 <span style={{ fontSize: '11px' }} className="font-semibold">Kasbon</span>
+               </button>
+               <button onClick={() => setActiveTab('produk')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='produk' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
+                 <Package size={22} />
+                 <span style={{ fontSize: '11px' }} className="font-semibold">Produk</span>
+               </button>
+             </>
+           )}
         </nav>
         {/* PENGATURAN TOKO */}
         {activeTab === 'pengaturan' && (

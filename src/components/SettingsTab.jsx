@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { Store, Phone, MapPin, UploadCloud, Save, CheckCircle, Image as ImageIcon } from 'lucide-react';
+import { Store, Phone, MapPin, UploadCloud, Save, CheckCircle, Image as ImageIcon, Lock, UserX, UserCheck } from 'lucide-react';
 
 export default function SettingsTab({ session, onSettingsUpdate }) {
   const [settings, setSettings] = useState({
@@ -14,9 +14,18 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
   const [isUploading, setIsUploading] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [settingsId, setSettingsId] = useState(null);
+  
+  // Cashier Mode State
+  const [cashierPin, setCashierPin] = useState('');
+  const [isCashierMode, setIsCashierMode] = useState(false);
 
   useEffect(() => {
     if (session) fetchSettings();
+    const savedPin = localStorage.getItem('payuo_cashier_pin');
+    if (savedPin) {
+      setCashierPin(savedPin);
+      setIsCashierMode(localStorage.getItem('payuo_cashier_mode') === 'true');
+    }
   }, [session]);
 
   const fetchSettings = async () => {
@@ -246,6 +255,71 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
           </form>
         </div>
       </div>
+
+      {/* Cashier Mode Section */}
+      <div className="max-w-2xl mx-auto mt-8 mb-8">
+        <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/40 p-xl border border-slate-100 relative overflow-hidden">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className={`w-20 h-20 shrink-0 rounded-full flex items-center justify-center ${isCashierMode ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400'}`}>
+              <Lock size={36} />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-xl font-bold text-slate-800 mb-1">Mode Karyawan (Kunci Layar)</h3>
+              <p className="text-sm text-slate-500 mb-4">
+                Kunci perangkat ini hanya di layar Kasir agar Karyawan tidak bisa melihat omset, menghapus barang, atau mengubah pengaturan toko.
+              </p>
+              
+              <div className="flex flex-col md:flex-row items-center gap-3">
+                <input 
+                  type="password" 
+                  placeholder="Buat PIN 4 Digit" 
+                  maxLength={4}
+                  className="input w-full md:w-40 text-center font-bold tracking-[0.5em] text-lg bg-slate-50 border-slate-200 focus:border-indigo-500 focus:ring-indigo-500/20"
+                  value={cashierPin}
+                  onChange={(e) => setCashierPin(e.target.value.replace(/[^0-9]/g, ''))}
+                  disabled={isCashierMode}
+                />
+                
+                {!isCashierMode ? (
+                  <button 
+                    type="button"
+                    disabled={cashierPin.length < 4}
+                    onClick={() => {
+                      if (cashierPin.length < 4) return;
+                      localStorage.setItem('payuo_cashier_pin', cashierPin);
+                      localStorage.setItem('payuo_cashier_mode', 'true');
+                      alert("Mode Karyawan aktif! Perangkat ini sekarang terkunci di layar Kasir.");
+                      window.location.reload();
+                    }}
+                    className="w-full md:w-auto btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    <UserCheck size={18} /> Aktifkan Kunci
+                  </button>
+                ) : (
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      const input = prompt("Masukkan PIN 4 Digit untuk mematikan Mode Karyawan:");
+                      if (input === cashierPin) {
+                        localStorage.removeItem('payuo_cashier_mode');
+                        setIsCashierMode(false);
+                        alert("Kunci dibuka! Anda kembali memiliki akses penuh.");
+                        window.location.reload();
+                      } else if (input !== null) {
+                        alert("PIN Salah!");
+                      }
+                    }}
+                    className="w-full md:w-auto btn bg-red-100 hover:bg-red-200 text-red-600 font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2"
+                  >
+                    <UserX size={18} /> Matikan Kunci
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
