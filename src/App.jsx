@@ -5,6 +5,7 @@ import Auth from './components/Auth';
 import SubscriptionBadge from './components/SubscriptionBadge';
 import PricingModal from './components/PricingModal';
 import KasbonTab from './components/KasbonTab';
+import CheckoutModal from './components/CheckoutModal';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -49,6 +50,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
 
   // Fetch Products on Session Load
   useEffect(() => {
@@ -463,7 +465,11 @@ function App() {
                   <button onClick={clearCart} className="btn btn-secondary w-12" title="Hapus Semua">
                     <Trash2 size={20} className="text-danger" />
                   </button>
-                  <button className="btn btn-primary flex-1 py-lg text-lg font-bold" disabled={cart.length === 0}>
+                  <button 
+                    className="btn btn-primary flex-1 py-lg text-lg font-bold" 
+                    disabled={cart.length === 0}
+                    onClick={() => setIsCheckoutModalOpen(true)}
+                  >
                     <CreditCard size={20} /> Bayar
                   </button>
                 </div>
@@ -639,6 +645,13 @@ function App() {
       {isPricingModalOpen && (
         <PricingModal onClose={() => setIsPricingModalOpen(false)} />
       )}
+      <CheckoutModal 
+        isOpen={isCheckoutModalOpen} 
+        onClose={() => setIsCheckoutModalOpen(false)} 
+        totalAmount={totalAmount}
+        cart={cart}
+        onClearCart={clearCart}
+      />
     </div>
   );
 }

@@ -15,6 +15,11 @@ export default function KasbonTab({ session }) {
   const [newCustomer, setNewCustomer] = useState({ name: '', phone: '', address: '' });
   const [isSaving, setIsSaving] = useState(false);
 
+  // Transactions state
+  const [transactions, setTransactions] = useState([]);
+  const [isTransactionLoading, setIsTransactionLoading] = useState(false);
+  const [transactionForm, setTransactionForm] = useState({ type: '', amount: '', notes: '' });
+
   useEffect(() => {
     if (session) fetchCustomers();
   }, [session]);
@@ -61,7 +66,52 @@ export default function KasbonTab({ session }) {
     setIsSaving(false);
   };
 
-  // Nanti kita buat logika untuk transaksi kasbon di dalam detail
+  const fetchTransactions = async (customerId) => {
+    setIsTransactionLoading(true);
+    const { data, error } = await supabase
+      .from('kasbon_transactions')
+      .select('*')
+      .eq('customer_id', customerId)
+      .order('created_at', { ascending: false });
+    if (!error && data) setTransactions(data);
+    setIsTransactionLoading(false);
+  };
+
+  useEffect(() => {
+    if (selectedCustomer) {
+      fetchTransactions(selectedCustomer.id);
+      setTransactionForm({ type: '', amount: '', notes: '' });
+    }
+  }, [selectedCustomer]);
+
+  const handleTransactionSubmit = async (e) => {
+    e.preventDefault();
+    if (!transactionForm.amount || !transactionForm.type) return;
+    
+    setIsSaving(true);
+    const amountNum = Number(transactionForm.amount);
+    const finalAmount = transactionForm.type === 'payment' ? -amountNum : amountNum;
+    
+    const { data, error } = await supabase
+      .from('kasbon_transactions')
+      .insert([{
+        customer_id: selectedCustomer.id,
+        amount: finalAmount,
+        type: transactionForm.type,
+        notes: transactionForm.notes || (transactionForm.type === 'kasbon' ? 'Tambah Kasbon Manual' : 'Pembayaran Cicilan')
+      }])
+      .select();
+      
+    if (!error && data) {
+      setTransactions([data[0], ...transactions]);
+      const updatedDebt = Number(selectedCustomer.total_debt || 0) + finalAmount;
+      const updatedCustomer = { ...selectedCustomer, total_debt: updatedDebt };
+      setSelectedCustomer(updatedCustomer);
+      setCustomers(customers.map(c => c.id === selectedCustomer.id ? updatedCustomer : c));
+      setTransactionForm({ type: '', amount: '', notes: '' });
+    }
+    setIsSaving(false);
+  };
   
   const filteredCustomers = customers.filter(c => 
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -226,16 +276,71 @@ export default function KasbonTab({ session }) {
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto bg-white p-lg flex flex-col items-center justify-center text-center">
-              <History size={40} className="text-slate-200 mb-2" />
-              <p className="text-slate-400">Daftar riwayat transaksi (Berikan Kasbon / Terima Cicilan) akan tampil di sini.</p>
+            <div className="flex-1 overflow-y-auto bg-slate-50 flex flex-col relative">
+              {/* Form Transaksi */}
+              {transactionForm.type !== '' && (
+                <div className="p-lg bg-white border-b border-border shadow-sm mb-2 animate-slide-down">
+                  <div className="flex justify-between items-center mb-sm">
+                    <h3 className={`font-bold ${transactionForm.type === 'kasbon' ? 'text-danger' : 'text-success'}`}>
+                      {transactionForm.type === 'kasbon' ? 'Berikan Kasbon Baru' : 'Terima Pembayaran'}
+                    </h3>
+                    <button onClick={() => setTransactionForm({ type: '', amount: '', notes: '' })} className="text-slate-400 hover:text-slate-700">Tutup</button>
+                  </div>
+                  <form onSubmit={handleTransactionSubmit} className="space-y-sm">
+                    <div className="input-group">
+                      <label className="input-label">Nominal (Rp) *</label>
+                      <input required type="number" min="1" className="input bg-slate-50 text-lg font-bold" placeholder="0" value={transactionForm.amount} onChange={e => setTransactionForm({...transactionForm, amount: e.target.value})} />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Catatan (Opsional)</label>
+                      <input type="text" className="input bg-slate-50" placeholder={transactionForm.type === 'kasbon' ? 'Misal: Rokok 2 bungkus' : 'Misal: Cicilan pertama'} value={transactionForm.notes} onChange={e => setTransactionForm({...transactionForm, notes: e.target.value})} />
+                    </div>
+                    <button type="submit" disabled={isSaving || !transactionForm.amount} className={`btn w-full mt-2 ${transactionForm.type === 'kasbon' ? 'bg-danger hover:bg-red-600' : 'bg-success hover:bg-green-600'} text-white`}>
+                      {isSaving ? 'Menyimpan...' : 'Simpan Transaksi'}
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* Riwayat */}
+              <div className="p-lg">
+                <h3 className="font-bold text-secondary mb-md">Riwayat Transaksi</h3>
+                {isTransactionLoading ? (
+                  <div className="flex justify-center p-xl"><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div></div>
+                ) : transactions.length === 0 ? (
+                  <div className="text-center py-xl">
+                    <History size={40} className="text-slate-200 mb-2 mx-auto" />
+                    <p className="text-slate-400 text-sm">Belum ada riwayat transaksi.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-sm pb-10">
+                    {transactions.map(trx => (
+                      <div key={trx.id} className="bg-white p-sm rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
+                        <div>
+                          <p className="font-bold text-secondary text-sm">{trx.notes || (trx.type === 'kasbon' ? 'Kasbon' : 'Pembayaran')}</p>
+                          <p className="text-xs text-slate-400">{new Date(trx.created_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'})}</p>
+                        </div>
+                        <div className={`font-bold ${trx.type === 'kasbon' ? 'text-danger' : 'text-success'}`}>
+                          {trx.type === 'kasbon' ? '+' : '-'} Rp {Math.abs(trx.amount).toLocaleString('id-ID')}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="p-lg bg-white border-t border-border flex gap-sm">
-              <button className="flex-1 bg-red-50 text-red-600 font-bold py-3 rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center gap-2">
+            <div className="p-md bg-white border-t border-border flex gap-sm z-10">
+              <button 
+                onClick={() => setTransactionForm({ type: 'kasbon', amount: '', notes: '' })}
+                className="flex-1 bg-red-50 text-red-600 font-bold py-3 rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center gap-2"
+              >
                 <TrendingUp size={18} /> Beri Kasbon
               </button>
-              <button className="flex-1 bg-green-50 text-green-600 font-bold py-3 rounded-xl hover:bg-green-100 transition-colors flex items-center justify-center gap-2">
+              <button 
+                onClick={() => setTransactionForm({ type: 'payment', amount: '', notes: '' })}
+                className="flex-1 bg-green-50 text-green-600 font-bold py-3 rounded-xl hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
+              >
                 <TrendingDown size={18} /> Terima Bayar
               </button>
             </div>
