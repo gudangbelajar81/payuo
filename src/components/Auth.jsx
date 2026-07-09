@@ -37,7 +37,14 @@ export default function Auth({ onLogin }) {
         }
       }
     } catch (error) {
-      alert(error.message);
+      console.error("Auth Error:", error);
+      let msg = error?.message || "Terjadi kesalahan yang tidak diketahui.";
+      if (typeof msg === 'object' || msg === '{}' || msg === '[object Object]') {
+        msg = "Autentikasi gagal. Jika Anda sebelumnya mendaftar via Google, silakan gunakan tombol 'Lanjutkan dengan Google' di bawah.";
+      } else if (msg.toLowerCase().includes('already registered') || msg.toLowerCase().includes('user already exists')) {
+        msg = "Email ini sudah terdaftar! Silakan pindah ke mode Login (Masuk) atau gunakan tombol Google.";
+      }
+      alert(msg);
     } finally {
       setLoading(false);
     }
