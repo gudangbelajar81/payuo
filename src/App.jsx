@@ -9,6 +9,7 @@ import CheckoutModal from './components/CheckoutModal';
 import SettingsTab from './components/SettingsTab';
 import QRCodeModal from './components/QRCodeModal';
 import LimitExceededModal from './components/LimitExceededModal';
+import SuperadminDashboard from './components/SuperadminDashboard';
 import { 
   ShoppingBag, 
   ShoppingCart,
@@ -29,7 +30,8 @@ import {
   ChevronRight,
   LogOut,
   ChevronDown,
-  QrCode
+  QrCode,
+  ShieldCheck
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
@@ -396,8 +398,19 @@ function App() {
               </div>
               <span style={{ fontSize: '11px' }} className="font-bold tracking-wide text-red-400 group-hover:text-red-500 transition-colors">Logout</span>
             </button>
-          </div>
-        </nav>
+
+          {session?.user?.email === 'alvezadigital81@gmail.com' && (
+            <button 
+              onClick={() => setActiveTab('superadmin')}
+              className={`flex flex-col items-center p-2 rounded-xl transition-all duration-300 ${activeTab === 'superadmin' ? 'text-indigo-600 bg-indigo-50 transform -translate-y-1' : 'text-slate-400 hover:text-slate-600'}`}
+            >
+              <ShieldCheck size={24} className={activeTab === 'superadmin' ? 'animate-pulse' : ''} />
+              <span className="text-[10px] font-bold mt-1">Admin</span>
+            </button>
+          )}
+
+        </div>
+      </nav>
       </aside>
 
       {/* MAIN CONTENT */}
@@ -412,6 +425,7 @@ function App() {
               {activeTab === 'kasir' ? (storeSettings?.store_name || 'Kasir Utama')
                 : activeTab === 'kasbon' ? 'Buku Kasbon' 
                 : activeTab === 'pengaturan' ? 'Pengaturan Toko'
+                : activeTab === 'superadmin' ? 'Ruang Kendali Pusat'
                 : 'Kelola Produk'}
             </h2>
           </div>
@@ -702,6 +716,11 @@ function App() {
         {/* PENGATURAN TOKO */}
         {activeTab === 'pengaturan' && (
           <SettingsTab session={session} onSettingsUpdate={setStoreSettings} />
+        )}
+
+        {/* DASBOR SUPERADMIN */}
+        {activeTab === 'superadmin' && (
+          <SuperadminDashboard />
         )}
 
       </main>
