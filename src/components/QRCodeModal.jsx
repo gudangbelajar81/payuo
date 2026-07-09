@@ -1,8 +1,11 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { X, ExternalLink, QrCode } from 'lucide-react';
+import { X, ExternalLink, QrCode, Download } from 'lucide-react';
+import { usePWAInstall } from '../hooks/usePWAInstall';
 
 export default function QRCodeModal({ isOpen, onClose }) {
+  const { isInstallable, isInstalled, promptInstall } = usePWAInstall();
+
   if (!isOpen) return null;
 
   const targetUrl = 'https://payuo.alvezadigital.com';
@@ -59,15 +62,27 @@ export default function QRCodeModal({ isOpen, onClose }) {
             </ol>
           </div>
           
-          <a 
-            href={targetUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="mt-6 w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg flex justify-center items-center gap-2 text-sm"
-          >
-            <ExternalLink size={18} />
-            Buka Link Langsung di Komputer Ini
-          </a>
+          <div className="flex flex-col gap-2 mt-6">
+            {isInstallable && !isInstalled && (
+              <button 
+                onClick={promptInstall}
+                className="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 flex justify-center items-center gap-2 text-sm"
+              >
+                <Download size={18} />
+                Install Aplikasi PayuO Sekarang
+              </button>
+            )}
+            
+            <a 
+              href={targetUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={`w-full ${isInstallable ? 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50' : 'bg-slate-800 hover:bg-slate-900 text-white shadow-md hover:shadow-lg'} font-semibold py-3 px-4 rounded-xl transition-all flex justify-center items-center gap-2 text-sm`}
+            >
+              <ExternalLink size={18} />
+              Buka Link Langsung di Komputer Ini
+            </a>
+          </div>
         </div>
       </div>
     </div>
