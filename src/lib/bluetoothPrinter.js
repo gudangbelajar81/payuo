@@ -87,7 +87,7 @@ export async function printReceiptBluetooth(receiptData) {
     data.push(0x1b, 0x61, 0x01); // Center align
     data.push(...encoder.encode(`\n${method === 'kasbon' ? 'BELUM LUNAS' : 'LUNAS'}\n`));
     data.push(...encoder.encode('Terima kasih atas kunjungan Anda\n'));
-    data.push(...encoder.encode('Powered by PayuO\n\n\n'));
+    data.push(...encoder.encode('Powered by PayuO (GARNETA STORE)\n\n\n'));
     
     data.push(0x1b, 0x61, 0x00); // Left align
     
