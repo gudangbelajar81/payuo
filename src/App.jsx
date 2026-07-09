@@ -28,7 +28,8 @@ import {
   ShieldCheck,
   Lock,
   Bell,
-  CreditCard
+  CreditCard,
+  Minus
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
