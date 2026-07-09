@@ -132,30 +132,44 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
     e.preventDefault();
     setIsSaving(true);
     
+    // Coba save dengan store_font. Jika kolom belum ada, save tanpa store_font.
+    const buildPayload = (includeFont) => {
+      const base = {
+        store_name: settings.store_name,
+        store_phone: settings.store_phone,
+        store_address: settings.store_address,
+        store_logo_url: settings.store_logo_url,
+      };
+      if (includeFont) base.store_font = settings.store_font || 'Nunito';
+      return base;
+    };
+    
     let error;
-    if (settingsId) {
-      // Update
-      const res = await supabase.from('store_settings').update({
-        store_name: settings.store_name,
-        store_phone: settings.store_phone,
-        store_address: settings.store_address,
-        store_logo_url: settings.store_logo_url,
-        store_font: settings.store_font || 'Nunito',
-        updated_at: new Date()
-      }).eq('id', settingsId);
-      error = res.error;
-    } else {
-      // Insert
-      const res = await supabase.from('store_settings').insert([{
-        user_id: session.user.id,
-        store_name: settings.store_name,
-        store_phone: settings.store_phone,
-        store_address: settings.store_address,
-        store_logo_url: settings.store_logo_url,
-        store_font: settings.store_font || 'Nunito'
-      }]).select();
-      error = res.error;
-      if (res.data) setSettingsId(res.data[0].id);
+    const trySave = async (payload) => {
+      if (settingsId) {
+        const res = await supabase.from('store_settings').update({
+          ...payload,
+          updated_at: new Date()
+        }).eq('id', settingsId);
+        return res.error;
+      } else {
+        const res = await supabase.from('store_settings').insert([{
+          user_id: session.user.id,
+          ...payload
+        }]).select();
+        if (res.data) setSettingsId(res.data[0].id);
+        return res.error;
+      }
+    };
+
+    error = await trySave(buildPayload(true));
+    
+    // Jika error karena kolom store_font belum ada, coba tanpa font
+    if (error) {
+      error = await trySave(buildPayload(false));
+      if (!error) {
+        alert('Tersimpan! Tapi pilihan font belum aktif.\nJalankan SQL ini di Supabase:\n\nALTER TABLE store_settings ADD COLUMN store_font text DEFAULT \'Nunito\';');
+      }
     }
 
     if (!error) {
@@ -229,32 +243,31 @@ export default function SettingsTab({ session, onSettingsUpdate }) {
               />
             </div>
 
-            {/* Font Picker */}
+            {/* Font Picker - Dropdown */}
             <div className="input-group">
               <label className="input-label flex items-center gap-2"><Type size={16}/> Gaya Font Nama Toko (Struk)</label>
-              <div className="grid grid-cols-1 gap-2 mt-1">
-                {FONT_OPTIONS.map(font => (
-                  <button
-                    key={font.value}
-                    type="button"
-                    onClick={() => setSettings({...settings, store_font: font.value})}
-                    className={`flex items-center justify-between gap-3 p-3 rounded-xl border-2 transition-all text-left ${
-                      settings.store_font === font.value
-                        ? 'border-primary bg-primary/5'
-                        : 'border-slate-100 bg-slate-50 hover:border-slate-300'
-                    }`}
-                  >
-                    <div className="flex flex-col">
-                      <span className="text-xs text-slate-400 font-medium mb-1">{font.label}</span>
-                      <span style={{ fontFamily: font.value, fontSize: '22px', lineHeight: 1.2, color: '#334155' }}>
-                        {settings.store_name || 'NAMA TOKO'}
-                      </span>
-                    </div>
-                    {settings.store_font === font.value && (
-                      <CheckCircle size={20} className="text-primary shrink-0" />
-                    )}
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={settings.store_font || 'Nunito'}
+                  onChange={e => setSettings({...settings, store_font: e.target.value})}
+                  className="input bg-slate-50 border-slate-200 focus:border-primary w-full appearance-none pr-10 cursor-pointer"
+                >
+                  {FONT_OPTIONS.map(font => (
+                    <option key={font.value} value={font.value}>{font.label}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                  <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+              {/* Preview font terpilih */}
+              <div className="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-100 text-center">
+                <p className="text-xs text-slate-400 mb-1">Preview di struk:</p>
+                <p style={{ fontFamily: settings.store_font || 'Nunito', fontSize: '26px', lineHeight: 1.3, color: '#334155', fontWeight: 'bold' }}>
+                  {settings.store_name || 'NAMA TOKO'}
+                </p>
               </div>
             </div>
 
