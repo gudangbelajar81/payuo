@@ -43,7 +43,10 @@ export default function Auth({ onLogin }) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin
+          redirectTo: window.location.origin,
+          queryParams: {
+            prompt: 'select_account' // Memaksa Google memunculkan popup pilih akun
+          }
         }
       });
       if (error) throw error;
