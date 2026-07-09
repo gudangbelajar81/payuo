@@ -26,7 +26,8 @@ import {
   ChevronDown,
   QrCode,
   ShieldCheck,
-  Lock
+  Lock,
+  Bell
 } from 'lucide-react';
 
 // DUMMY DATA FOR MVP
