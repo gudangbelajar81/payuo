@@ -1,80 +1,5 @@
 export async function printReceiptBluetooth(receiptData) {
   try {
-    const loadImage = (url) => new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = () => resolve(img);
-      img.onerror = (e) => reject(e);
-      img.src = url;
-    });
-
-    const getLogoEscPos = async (url) => {
-      if (!url) return [];
-      try {
-        const img = await loadImage(url);
-        // Max width for 58mm printer is 384 pixels. We scale to max 200px to be safe and centered.
-        const maxWidth = 200;
-        const scale = Math.min(1, maxWidth / img.width);
-        const width = Math.floor(img.width * scale);
-        const height = Math.floor(img.height * scale);
-        
-        // Width must be multiple of 8
-        const printWidth = Math.floor((width + 7) / 8) * 8;
-        const printHeight = height;
-        
-        const canvas = document.createElement('canvas');
-        canvas.width = printWidth;
-        canvas.height = printHeight;
-        const ctx = canvas.getContext('2d');
-        
-        // Fill white background
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, printWidth, printHeight);
-        
-        // Draw image centered horizontally
-        const xOffset = Math.floor((printWidth - width) / 2);
-        ctx.drawImage(img, xOffset, 0, width, height);
-        
-        const imgData = ctx.getImageData(0, 0, printWidth, printHeight).data;
-        const widthBytes = printWidth / 8;
-        const rasterData = [];
-        
-        // ESC/POS GS v 0 command
-        // GS v 0 m xL xH yL yH d1...dk
-        rasterData.push(0x1d, 0x76, 0x30, 0x00);
-        rasterData.push(widthBytes & 0xff);
-        rasterData.push((widthBytes >> 8) & 0xff);
-        rasterData.push(printHeight & 0xff);
-        rasterData.push((printHeight >> 8) & 0xff);
-        
-        for (let y = 0; y < printHeight; y++) {
-          for (let xBytes = 0; xBytes < widthBytes; xBytes++) {
-            let byte = 0;
-            for (let b = 0; b < 8; b++) {
-              const x = xBytes * 8 + b;
-              const i = (y * printWidth + x) * 4;
-              const r = imgData[i];
-              const g = imgData[i + 1];
-              const b_color = imgData[i + 2];
-              const a = imgData[i + 3];
-              
-              // Grayscale calculation
-              const grayscale = r * 0.3 + g * 0.59 + b_color * 0.11;
-              // Threshold at 128. Transparent is considered white.
-              if (a > 128 && grayscale < 128) {
-                byte |= (1 << (7 - b));
-              }
-            }
-            rasterData.push(byte);
-          }
-        }
-        return rasterData;
-      } catch (e) {
-        console.error("Gagal merasterisasi logo:", e);
-        return [];
-      }
-    };
-    
     // 1. Minta akses ke Bluetooth Device (akan memunculkan popup di browser Chrome)
     const device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
@@ -128,23 +53,14 @@ export async function printReceiptBluetooth(receiptData) {
       0x1b, 0x61, 0x01, // Center align
     ];
     
-    // 1. LOGO
-    if (storeSettings?.store_logo_url) {
-      const logoBytes = await getLogoEscPos(storeSettings.store_logo_url);
-      if (logoBytes.length > 0) {
-        data.push(...logoBytes);
-        data.push(...encoder.encode('\n'));
-      }
-    }
-
-    // 2. NAMA TOKO (Tebal)
+    // 1. NAMA TOKO (Tebal & Double Size)
     data.push(0x1b, 0x45, 0x01); // Bold ON
     data.push(0x1d, 0x21, 0x11); // Double size
     data.push(...encoder.encode(tokoName + '\n'));
     data.push(0x1d, 0x21, 0x00); // Normal size
     data.push(0x1b, 0x45, 0x00); // Bold OFF
     
-    // 3. NO HP
+    // 2. NO HP
     if (tokoPhone) {
       data.push(...encoder.encode(tokoPhone + '\n'));
     }
