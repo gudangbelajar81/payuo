@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CreditCard, BookOpen, CheckCircle, Search, User, Bluetooth } from 'lucide-react';
+import { X, CreditCard, BookOpen, CheckCircle, Search, User, Bluetooth, Printer, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import Receipt from './Receipt';
 import { printReceiptBluetooth } from '../lib/bluetoothPrinter';
@@ -129,14 +129,14 @@ export default function CheckoutModal({ isOpen, onClose, totalAmount, cart, onCl
             disabled={isBluetoothPrinting}
             style={{ width: '100%', padding: '12px', backgroundColor: isBluetoothPrinting ? '#cbd5e1' : '#0ea5e9', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: isBluetoothPrinting ? 'not-allowed' : 'pointer', marginBottom: '8px', display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center' }}
           >
-            {isBluetoothPrinting ? 'Menghubungkan...' : '⚡ Cetak Bluetooth (Langsung)'}
+            {isBluetoothPrinting ? 'Menghubungkan...' : <><Printer size={18} /> Cetak Bluetooth (Langsung)</>}
           </button>
           
           <button 
             onClick={handlePrint}
             style={{ width: '100%', padding: '12px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', marginBottom: '8px', display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center' }}
           >
-            🖨️ Cetak PDF / USB (A4/58mm)
+            <FileText size={18} /> Cetak PDF / USB (A4/58mm)
           </button>
           
           <button 
