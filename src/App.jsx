@@ -671,8 +671,8 @@ function App() {
       </main>
 
       {/* Watermark Logo PayuO (Branding) */}
-      <div className="fixed bottom-4 right-4 pointer-events-none opacity-[0.03] z-0">
-        <img src="/payuo_logo.png" alt="PayuO Watermark" className="w-64 h-64 grayscale" />
+      <div className="fixed inset-0 pointer-events-none opacity-[0.02] z-0 flex items-center justify-center overflow-hidden">
+        <img src="/payuo_logo.png" alt="PayuO Watermark" className="w-[90vw] md:w-[60vw] max-w-5xl h-auto grayscale object-contain" />
       </div>
       
       {/* Modals */}
