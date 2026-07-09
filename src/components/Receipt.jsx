@@ -105,8 +105,8 @@ export default function Receipt({ data }) {
               <span style={{ fontWeight: 'bold' }}>{item.name}</span>
             </div>
             <div style={styles.row}>
-              <span>{item.quantity}x @{item.price.toLocaleString('id-ID')}</span>
-              <span>{(item.quantity * item.price).toLocaleString('id-ID')}</span>
+              <span>{item.qty}x @{item.price.toLocaleString('id-ID')}</span>
+              <span>{(item.qty * item.price).toLocaleString('id-ID')}</span>
             </div>
           </div>
         ))}
