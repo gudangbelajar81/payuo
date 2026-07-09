@@ -151,20 +151,24 @@ function App() {
   const handleSaveProduct = async (e) => {
     e.preventDefault();
     
-    // Validasi Limit Kuota (Anggap semua user saat ini belum langganan)
-    const totalProducts = products.length;
-    const photoProducts = products.filter(p => p.image_url).length;
+    // Validasi Limit Kuota (Bypass jika Pro)
+    const isPro = storeSettings?.subscription_tier === 'pro';
     
-    if (totalProducts >= 100) {
-      setLimitType('total');
-      setIsLimitModalOpen(true);
-      return;
-    }
-    
-    if (newProduct.file && photoProducts >= 20) {
-      setLimitType('photo');
-      setIsLimitModalOpen(true);
-      return;
+    if (!isPro) {
+      const totalProducts = products.length;
+      const photoProducts = products.filter(p => p.image_url).length;
+      
+      if (totalProducts >= 100) {
+        setLimitType('total');
+        setIsLimitModalOpen(true);
+        return;
+      }
+      
+      if (newProduct.file && photoProducts >= 20) {
+        setLimitType('photo');
+        setIsLimitModalOpen(true);
+        return;
+      }
     }
     
     setIsSaving(true);
@@ -755,7 +759,7 @@ function App() {
       
       {/* Modals */}
       {isPricingModalOpen && (
-        <PricingModal onClose={() => setIsPricingModalOpen(false)} />
+        <PricingModal onClose={() => setIsPricingModalOpen(false)} session={session} />
       )}
       <QRCodeModal 
         isOpen={isQrModalOpen} 

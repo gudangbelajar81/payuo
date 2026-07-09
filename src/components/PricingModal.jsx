@@ -1,18 +1,39 @@
 import React from 'react';
 import { Check, X, Printer, Cloud, ShieldCheck, PhoneCall, Smartphone, Wifi, WifiOff, Zap, Eye, Users, TrendingUp, Lock, Star } from 'lucide-react';
 
-const ADMIN_WA = '6285124070705';
-function wa(paket) {
-  window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(`Halo Admin PayuO 👋\n\nSaya tertarik: *${paket}*\nMohon info pembayarannya ya!`)}`, '_blank');
-}
-
 const TESTIMONIALS = [
   { q: '"Saya di Bali, toko di Surabaya — cek omset tiap hari dari HP. PayuO kayak punya mata di toko sendiri!"', name: 'Pak Rudi H.', role: 'Toko Sembako', init: 'R' },
   { q: '"5 HP bisa akses bareng — saya, istri, 3 karyawan. Stok update otomatis kalau ada yang beli!"', name: 'Pak Jono P.', role: 'Kelontong, Semarang', init: 'J' },
   { q: '"Upgrade dari Offline ke SaaS supaya bisa pantau dari rumah. Worth it banget!"', name: 'Mba Dina K.', role: 'Toko Fashion, Solo', init: 'D' },
 ];
 
-export default function PricingModal({ onClose }) {
+export default function PricingModal({ onClose, session }) {
+
+  const processPayment = (paket, harga) => {
+    // ==========================================
+    // CETAK BIRU INTEGRASI MIDTRANS (SNAP API)
+    // ==========================================
+    // const midtransClientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY;
+    // if (midtransClientKey) {
+    //   window.snap.pay(token, {
+    //     onSuccess: async function(result) {
+    //       await supabase.from('store_settings').update({ subscription_tier: 'pro' }).eq('user_id', session.user.id);
+    //       alert("Pembayaran Berhasil! Akun Anda sudah Pro.");
+    //       window.location.reload();
+    //     }
+    //   });
+    //   return;
+    // }
+
+    // ==========================================
+    // JALUR WHATSAPP SEMENTARA (FALLBACK)
+    // ==========================================
+    const email = session?.user?.email || 'Guest';
+    const text = `Halo Admin PayuO 👋\n\nSaya menggunakan email: *${email}*\nSaya tertarik berlangganan: *${paket}*\n\nMohon info pembayaran via QRIS/Transfer ya!`;
+    const ADMIN_WA = '6285124070705';
+    window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
   return (
     <div onClick={e => e.target === e.currentTarget && onClose()} style={{
       position: 'fixed', inset: 0, zIndex: 9999,
@@ -115,7 +136,7 @@ export default function PricingModal({ onClose }) {
               [true, 'Cetak Struk + Laporan Export'],
             ]} />
             <Note c="#2dd4bf" bg="rgba(13,148,136,.08)" border="rgba(13,148,136,.2)">💡 Bos di Jakarta, toko di Surabaya? Pantau kapanpun dari HP!</Note>
-            <Btn v="teal" onClick={() => wa('Paket SaaS Cloud Rp 99.000/bulan')}><Cloud size={13} /> Berlangganan Sekarang →</Btn>
+            <Btn v="teal" onClick={() => processPayment('Paket SaaS Cloud Rp 99.000/bulan')}><Cloud size={13} /> Berlangganan Sekarang →</Btn>
           </Card>
 
           {/* VIP */}
@@ -132,7 +153,7 @@ export default function PricingModal({ onClose }) {
               [true, 'Server 35rb/bln selamanya (hemat 64%!)'],
             ]} />
             <Note c="#f59e0b" bg="rgba(245,158,11,.07)" border="rgba(245,158,11,.2)">🎁 Langsung siap pakai! Tinggal tancap listrik, langsung jualan!</Note>
-            <Btn v="amber" onClick={() => wa('Paket Usaha VIP Bundle Hardware Rp 1.5 Jt + Printer')}><Printer size={13} /> Pesan Paket VIP →</Btn>
+            <Btn v="amber" onClick={() => processPayment('Paket Usaha VIP Bundle Hardware Rp 1.5 Jt + Printer')}><Printer size={13} /> Pesan Paket VIP →</Btn>
           </Card>
 
           {/* OFFLINE */}
@@ -149,7 +170,7 @@ export default function PricingModal({ onClose }) {
               [false, 'Tidak bisa pantau jarak jauh'],
             ]} />
             <Note c="#a5b4fc" bg="rgba(99,102,241,.07)" border="rgba(99,102,241,.2)">⚠️ Perlu pantau dari luar toko? Pilih SaaS atau VIP.</Note>
-            <Btn v="indigo" onClick={() => wa('Paket Beli Putus Offline Rp 1.5 Jt + Bonus Printer')}><Smartphone size={13} /> Beli Lisensi Offline →</Btn>
+            <Btn v="indigo" onClick={() => processPayment('Paket Beli Putus Offline Rp 1.5 Jt + Bonus Printer')}><Smartphone size={13} /> Beli Lisensi Offline →</Btn>
           </Card>
 
         </div>
@@ -175,7 +196,7 @@ export default function PricingModal({ onClose }) {
               <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>Rp 299rb</div>
               <div style={{ fontSize: '0.65rem', color: '#a78bfa' }}>Garansi Kompatibel PayuO ✓</div>
             </div>
-            <button className="pgb" onClick={() => wa('Printer Kasir Thermal untuk PayuO')} style={{ padding: '10px 18px', background: 'linear-gradient(135deg,#7c3aed,#ec4899)', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer', boxShadow: '0 6px 20px rgba(124,58,237,.4)', display: 'flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', transition: 'all .2s' }}>
+            <button className="pgb" onClick={() => processPayment('Printer Kasir Thermal untuk PayuO')} style={{ padding: '10px 18px', background: 'linear-gradient(135deg,#7c3aed,#ec4899)', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer', boxShadow: '0 6px 20px rgba(124,58,237,.4)', display: 'flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', transition: 'all .2s' }}>
               <Printer size={14} /> Tanya Harga via WA →
             </button>
           </div>
