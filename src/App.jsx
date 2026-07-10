@@ -710,7 +710,7 @@ function App() {
         {/* MOBILE FLOATING CART */}
         {activeTab === 'kasir' && !isMobileCartOpen && (
           <div className="lg:hidden fixed z-40 cursor-pointer animate-fade-in shadow-[0_10px_40px_-10px_rgba(13,148,136,0.6)]"
-               style={{ bottom: '85px', right: '16px', borderRadius: '30px', overflow: 'hidden' }}
+               style={{ bottom: 'calc(70px + env(safe-area-inset-bottom, 0px))', right: '16px', borderRadius: '30px', overflow: 'hidden' }}
                onClick={() => setIsMobileCartOpen(true)}>
             <div className="flex items-center bg-slate-900 text-white pl-5 pr-2 py-2" style={{ gap: '12px' }}>
               <div className="flex items-center gap-2 font-bold text-sm">
@@ -725,7 +725,8 @@ function App() {
         )}
 
         {/* MOBILE BOTTOM NAVIGATION */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-border flex justify-around items-center p-xs z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-border flex justify-around items-center z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]"
+          style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 8px)', paddingTop: '8px' }}>
            <button onClick={() => setActiveTab('kasir')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='kasir' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
              <ShoppingBag size={22} />
              <span style={{ fontSize: '11px' }} className="font-semibold">Kasir</span>
@@ -739,6 +740,10 @@ function App() {
                <button onClick={() => setActiveTab('produk')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='produk' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
                  <Package size={22} />
                  <span style={{ fontSize: '11px' }} className="font-semibold">Produk</span>
+               </button>
+               <button onClick={() => setActiveTab('pengaturan')} className={`flex flex-col items-center gap-1 p-sm rounded-xl flex-1 transition-fast ${activeTab==='pengaturan' ? 'text-primary bg-primary-light/30' : 'text-secondary-light'}`}>
+                 <span style={{ fontSize: '20px', lineHeight: 1 }}>⚙️</span>
+                 <span style={{ fontSize: '11px' }} className="font-semibold">Setting</span>
                </button>
              </>
            )}
